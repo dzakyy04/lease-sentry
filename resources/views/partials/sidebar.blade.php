@@ -21,54 +21,48 @@
         <div class="nk-sidebar-content">
             <div class="nk-sidebar-menu" data-simplebar>
                 <ul class="nk-menu">
-                    <li class="nk-menu-item {{ Request::segment(1) == 'dashboard' ? 'active-link' : '' }}">
-                        <a href="" class="nk-menu-link">
+                    <li class="nk-menu-item">
+                        <a href="{{ route('dashboard.index') }}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-dashboard"></em></span>
                             <span class="nk-menu-text">Dashboard</span>
                         </a>
                     </li>
-                    <li class="nk-menu-item has-sub {{ Request::segment(1) == 'dokumen' ? 'active-link' : '' }}">
-                        <a href="#" class="nk-menu-link nk-menu-toggle" data-bs-original-title="" title="">
-                            <span class="nk-menu-icon">
-                                <em class="icon ni ni-file-text"></em>
-                            </span>
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-file-text"></em></span>
                             <span class="nk-menu-text">Dokumen</span>
                         </a>
                         <ul class="nk-menu-sub">
                             <li class="nk-menu-item">
-                                <a href="html/project-card.html" class="nk-menu-link" data-bs-original-title=""
-                                    title="">
-                                    <span class="nk-menu-text"><em class="ni ni-bullet"></em> 2020</span>
+                                <a href="html/project-card.html" class="nk-menu-link">
+                                    <span class="nk-menu-text">2020</span>
                                 </a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="html/project-card.html" class="nk-menu-link" data-bs-original-title=""
-                                    title="">
-                                    <span class="nk-menu-text"><em class="ni ni-bullet"></em> 2021</span>
+                                <a href="html/project-card.html" class="nk-menu-link">
+                                    <span class="nk-menu-text">2021</span>
                                 </a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="html/project-card.html" class="nk-menu-link" data-bs-original-title=""
-                                    title="">
-                                    <span class="nk-menu-text"><em class="ni ni-bullet"></em> 2022</span>
+                                <a href="html/project-card.html" class="nk-menu-link">
+                                    <span class="nk-menu-text">2022</span>
                                 </a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="html/project-card.html" class="nk-menu-link" data-bs-original-title=""
-                                    title="">
-                                    <span class="nk-menu-text"><em class="ni ni-bullet"></em> 2023</span>
+                                <a href="html/project-card.html" class="nk-menu-link">
+                                    <span class="nk-menu-text">2023</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="nk-menu-item {{ Request::segment(1) == 'konseptor' ? 'active-link' : '' }}">
-                        <a href="#" class="nk-menu-link">
+                    <li class="nk-menu-item">
+                        <a href="}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-users"></em></span>
                             <span class="nk-menu-text">Konseptor</span>
                         </a>
                     </li>
-                    <li class="nk-menu-item {{ Request::segment(1) == 'hari-libur' ? 'active-link' : '' }}">
-                        <a href="#" class="nk-menu-link">
+                    <li class="nk-menu-item">
+                        <a href="{{ route('holiday.index') }}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-calender-date"></em></span>
                             <span class="nk-menu-text">Hari Libur</span>
                         </a>

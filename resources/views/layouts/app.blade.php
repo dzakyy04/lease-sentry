@@ -1,60 +1,47 @@
-
 <!DOCTYPE html>
-<html lang="zxx" class="js">
+<html lang="en" class="js">
 
 <head>
-    <base href="../">
-    <meta charset="utf-8">
-    <meta name="author" content="Softnio">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}">
     <!-- Page Title  -->
-    <title>Blank - Layout | DashLite Admin Template</title>
+    <title>Lease Sentry | {{ $title }}</title>
     <!-- StyleSheets  -->
-    <link rel="stylesheet" href=" {{ asset('/assets/css/dashlite.css?ver=3.0.3')}}">
-    <link id="skin-default" rel="stylesheet" href="{{ asset('assets/css/theme.css?ver=3.0.3')}} ">
+    <link rel="stylesheet" href=" {{ asset('/assets/css/dashlite.css?ver=3.0.3') }}">
+    <link id="skin-default" rel="stylesheet" href="{{ asset('assets/css/theme.css?ver=3.0.3') }} ">
+    @stack('css')
 </head>
 
 <body class="nk-body bg-lighter npc-default has-sidebar ">
     <div class="nk-app-root">
-        <!-- main @s -->
         <div class="nk-main ">
-            <!-- sidebar @s -->
+            {{-- Sidebar --}}
             @include('partials.sidebar')
-            
-            <!-- sidebar @e -->
-            <!-- wrap @s -->
             <div class="nk-wrap ">
-                <!-- main header @s -->
+                {{-- Header --}}
                 @include('partials.header')
-                
-                <!-- main header @e -->
-                <!-- content @s -->
                 <div class="nk-content ">
                     <div class="container-fluid">
                         <div class="nk-content-inner">
                             <div class="nk-content-body">
+                                {{-- Main content --}}
                                 @yield('content')
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- content @e -->
-                <!-- footer @s -->
+                {{-- Footer --}}
                 @include('partials.footer')
-                
-                <!-- footer @e -->
             </div>
-            <!-- wrap @e -->
         </div>
-        <!-- main @e -->
     </div>
-    <!-- app-root @e -->
     <!-- JavaScript -->
     <script src="{{ asset('assets/js/bundle.js?ver=3.0.3') }}"></script>
-    <script src="{{ asset('assets/js/scripts.js?ver=3.0.3')}}"></script>
+    <script src="{{ asset('assets/js/scripts.js?ver=3.0.3') }}"></script>
+    @stack('js')
 </body>
 
 </html>
