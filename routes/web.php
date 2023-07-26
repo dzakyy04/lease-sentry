@@ -35,4 +35,5 @@ Route::middleware('auth')->group(function () {
     Route::post('hari-libur', [HolidayController::class, 'store'])->name('holiday.store');
     Route::get('/hari-libur/{id}', [HolidayController::class, 'getHoliday'])->name('holiday.get');
     Route::post('/hari-libur/{id}', [HolidayController::class, 'update'])->name('holiday.update');
+    Route::delete('/hari-libur/{id}', [HolidayController::class, 'delete'])->name('holiday.delete');
 });

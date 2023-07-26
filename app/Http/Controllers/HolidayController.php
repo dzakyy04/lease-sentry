@@ -38,6 +38,8 @@ class HolidayController extends Controller
     public function getHoliday($id)
     {
         $holiday = Holiday::find($id);
+        $holiday->formatted_date =
+            Carbon::createFromFormat('Y-m-d', $holiday->date)->locale('id')->isoFormat('D MMMM YYYY');
         return response()->json($holiday);
     }
 
@@ -53,5 +55,14 @@ class HolidayController extends Controller
         $holiday->update($data);
 
         return back()->with('success', "Data berhasil diedit");
+    }
+
+    public function delete($id)
+    {
+        $holiday = Holiday::findorFail($id);
+
+        $holiday->delete();
+
+        return back()->with('success', "Data berhasil dihapus");
     }
 }

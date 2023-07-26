@@ -10,15 +10,22 @@
         const nameInput = holidayModal.find('#name');
         const modalTitle = holidayModal.find('#modalTitle');
 
+        const deleteHolidayForm = $('#deleteHolidayForm');
+        const deleteHolidayModal = $('#deleteHolidayModal');
+        const deleteMessage = deleteHolidayModal.find('#deleteMessage');
+
         async function fetchData(id) {
             try {
-                const response = await fetch(`{{ route('holiday.get', ':id') }}`.replace(':id', id));
+                const response = await fetch('{{ route('holiday.get', ':id') }}'.replace(':id', id));
                 if (!response.ok) {
                     throw new Error('Data tidak ditemukan');
                 }
                 const data = await response.json();
                 dateInput.val(data.date);
                 nameInput.val(data.name);
+                deleteMessage.html(
+                    `Apakah anda yakin ingin menghapus <strong>${data.formatted_date} (${data.name})</strong> sebagai hari libur?`
+                )
             } catch (error) {
                 alert(error.message);
             }
@@ -36,6 +43,7 @@
         }
 
         $(document).ready(function() {
+            // Add and Edit Modal
             $(document).on('show.bs.modal', '#holidayModal', function(event) {
                 const button = $(event.relatedTarget);
                 const id = button.data('id');
@@ -45,11 +53,20 @@
 
                 if (id) {
                     fetchData(id);
-                    setFormAction(holidayForm, id, 'update');
+                    holidayForm.attr('action', '{{ route('holiday.update', ':id') }}'.replace(':id', id));
                 } else {
                     clearModalForm();
-                    setFormAction(holidayForm, null, 'store');
+                    holidayForm.attr('action', '{{ route('holiday.store') }}');
                 }
+            });
+
+            // Delete modal
+            $(document).on('show.bs.modal', '#deleteHolidayModal', function(event) {
+                const button = $(event.relatedTarget);
+                const id = button.data('id');
+
+                fetchData(id);
+                deleteHolidayForm.attr('action', '{{ route('holiday.delete', ':id') }}'.replace(':id', id));
             });
         });
     </script>
@@ -101,7 +118,8 @@
                                             data-id="{{ $holiday->id }}">
                                             <em class="ni ni-edit"></em>
                                         </button>
-                                        <button class="btn btn-danger btn-xs rounded-pill">
+                                        <button class="btn btn-danger btn-xs rounded-pill" data-bs-toggle="modal"
+                                            data-bs-target="#deleteHolidayModal" data-id="{{ $holiday->id }}">
                                             <em class="ni ni-trash"></em>
                                         </button>
                                     </td>
@@ -114,7 +132,7 @@
         </div>
     </div>
 
-    {{-- Modal --}}
+    {{-- Add and Edit Modal --}}
     <div class="modal fade" id="holidayModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -142,6 +160,30 @@
                         </div>
                         <div class="form-group text-end">
                             <button type="submit" class="btn btn-lg btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Delete Modal --}}
+    <div class="modal fade" id="deleteHolidayModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Hapus Hari Libur</h5>
+                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="POST" class="form-validate is-alter" id="deleteHolidayForm">
+                        @csrf
+                        @method('delete')
+                        <div id="deleteMessage"></div>
+                        <div class="form-group text-end">
+                            <button type="submit" class="btn btn-lg btn-danger">Hapus</button>
                         </div>
                     </form>
                 </div>
