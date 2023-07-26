@@ -65,7 +65,7 @@
                                 <th class="text-center">No</th>
                                 <th class="text-center">Tanggal</th>
                                 <th class="text-center">Memperingati</th>
-                                <th class="text-center">Aksi</th>
+                                <th class="text-center no-export">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>

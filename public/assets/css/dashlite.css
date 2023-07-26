@@ -18167,6 +18167,7 @@ div.dataTables_wrapper div.dataTables_length .input-group-lg > select,
 
 .ni-copy:before {
   content: "\e9fb";
+  color: var(--bs-secondary);
 }
 
 .ni-copy-fill:before {
@@ -18311,10 +18312,12 @@ div.dataTables_wrapper div.dataTables_length .input-group-lg > select,
 
 .ni-file-pdf:before {
   content: "\ea4a";
+  color: var(--bs-danger);
 }
 
 .ni-file-xls:before {
   content: "\ea51";
+  color: var(--bs-success);
 }
 
 .ni-file-zip:before {
@@ -19031,6 +19034,7 @@ div.dataTables_wrapper div.dataTables_length .input-group-lg > select,
 
 .ni-printer:before {
   content: "\eb31";
+  color: var(--bs-primary);
 }
 
 .ni-printer-fill:before {
@@ -24425,18 +24429,23 @@ div.dt-buttons .dual-listbox a.processing.dual-listbox__button:after,
 
 .buttons-copy:before {
   content: "\e9fb";
+  color: var(--bs-secondary);
 }
 .buttons-pdf:before {
   content: "\ea4a";
+  color: var(--bs-danger);
 }
 .buttons-excel:before {
   content: "\ea51";
+  color: var(--bs-success);
 }
 .buttons-csv:before {
   content: "\ea50";
+  color: var(--bs-teal);
 }
 .buttons-print:before {
   content: "\eb31";
+  color: var(--bs-primary);
 }
 .buttons-colvis:before {
   content: "\ecc5";
