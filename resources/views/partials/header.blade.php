@@ -2,17 +2,16 @@
     <div class="container-fluid">
         <div class="nk-header-wrap">
             <div class="nk-menu-trigger d-xl-none ms-n1">
-                <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
+                <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu"><em
+                        class="icon ni ni-menu"></em></a>
             </div>
             <div class="nk-header-brand d-xl-none">
                 <a href="html/index.html" class="logo-link">
-                    <img class="logo-light logo-img" src="{{ asset('assets/images/logo-kpknl.png')}}" srcset="./images/logo2x.png 2x" alt="logo">
-                    <img class="logo-dark logo-img" src="{{ asset('assets/images/logo-kpknl.png')}}" srcset="./images/logo-dark2x.png 2x" alt="logo-dark">
+                    <img class="logo-light logo-img" src="{{ asset('assets/images/logo-kpknl.png') }}"
+                        srcset="./images/logo2x.png 2x" alt="logo">
+                    <img class="logo-dark logo-img" src="{{ asset('assets/images/logo-kpknl.png') }}"
+                        srcset="./images/logo-dark2x.png 2x" alt="logo-dark">
                 </a>
-            </div>
-            <div class="nk-header-search ms-3 ms-xl-0">
-                <em class="icon ni ni-search"></em>
-                <input type="text" class="form-control border-transparent form-focus-none" placeholder="Search anything">
             </div>
             <div class="nk-header-tools">
                 <ul class="nk-quick-nav">
@@ -32,7 +31,9 @@
                                             <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
                                         </div>
                                         <div class="nk-notification-content">
-                                            <div class="nk-notification-text">You have requested to <span>Widthdrawl</span></div>
+                                            <div class="nk-notification-text">You have requested to
+                                                <span>Widthdrawl</span>
+                                            </div>
                                             <div class="nk-notification-time">2 hrs ago</div>
                                         </div>
                                     </div>
@@ -41,7 +42,8 @@
                                             <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
                                         </div>
                                         <div class="nk-notification-content">
-                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed</div>
+                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed
+                                            </div>
                                             <div class="nk-notification-time">2 hrs ago</div>
                                         </div>
                                     </div>
@@ -50,7 +52,9 @@
                                             <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
                                         </div>
                                         <div class="nk-notification-content">
-                                            <div class="nk-notification-text">You have requested to <span>Widthdrawl</span></div>
+                                            <div class="nk-notification-text">You have requested to
+                                                <span>Widthdrawl</span>
+                                            </div>
                                             <div class="nk-notification-time">2 hrs ago</div>
                                         </div>
                                     </div>
@@ -59,7 +63,8 @@
                                             <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
                                         </div>
                                         <div class="nk-notification-content">
-                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed</div>
+                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed
+                                            </div>
                                             <div class="nk-notification-time">2 hrs ago</div>
                                         </div>
                                     </div>
@@ -68,7 +73,9 @@
                                             <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
                                         </div>
                                         <div class="nk-notification-content">
-                                            <div class="nk-notification-text">You have requested to <span>Widthdrawl</span></div>
+                                            <div class="nk-notification-text">You have requested to
+                                                <span>Widthdrawl</span>
+                                            </div>
                                             <div class="nk-notification-time">2 hrs ago</div>
                                         </div>
                                     </div>
@@ -77,7 +84,8 @@
                                             <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
                                         </div>
                                         <div class="nk-notification-content">
-                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed</div>
+                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed
+                                            </div>
                                             <div class="nk-notification-time">2 hrs ago</div>
                                         </div>
                                     </div>
@@ -104,22 +112,28 @@
                             <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
                                 <div class="user-card">
                                     <div class="user-avatar">
-                                        <span>AB</span>
+                                        <span class="icon ni ni-user-alt"></span>
                                     </div>
                                     <div class="user-info">
-                                        <span class="lead-text">Abu Bin Ishtiyak</span>
-                                        <span class="sub-text">info@softnio.com</span>
+                                        <span class="lead-text">{{ Auth::user()->name }}</span>
+                                        <span class="sub-text">{{ Auth::user()->role }}</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="dropdown-inner">
                                 <ul class="link-list">
-                                    <li><a class="dark-switch" href="#"><em class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>
+                                    <li><a class="dark-switch" href="#"><em
+                                                class="icon ni ni-moon"></em><span>Mode Gelap</span></a></li>
                                 </ul>
                             </div>
                             <div class="dropdown-inner">
                                 <ul class="link-list">
-                                    <li><a href="#"><em class="icon ni ni-signout"></em><span>Sign out</span></a></li>
+                                    <li>
+                                        <a href="{{ route('logout') }}">
+                                            <em class="icon ni ni-signout"></em>
+                                            <span>Logout</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
