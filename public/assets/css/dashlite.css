@@ -40764,4 +40764,8 @@ div.dataTables_wrapper div.dataTables_filter .dark-mode .nk-header-search input,
   border-color: #854fff !important;
 }
 
+.active-link > a, .active-link > a .nk-menu-icon .icon {
+  background-color: var(--bs-gray-100)!important;
+  color: #9769ff!important;
+}
 /*! END @iO */
