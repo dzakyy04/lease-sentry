@@ -38,7 +38,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form action="html/index.html">
+                                <form action="{{ route('login') }}" method="POST">
+                                    @csrf
                                     <div class="form-group">
                                         <div class="form-label-group">
                                             <label class="form-label" for="email">Email</label>

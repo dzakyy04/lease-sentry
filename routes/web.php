@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
-Route::get('login', function() {
-    return view('auth.login', [
-        'title' => 'Login'
-    ]);
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'index']);
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
 });
