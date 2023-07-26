@@ -190,7 +190,7 @@
                 preventDuplicates: true,
                 showDuration: "1500",
                 hideDuration: "1500",
-                timeOut: "2000",
+                timeOut: "5000",
                 toastClass: "toastr",
                 extendedTimeOut: "3000",
             };

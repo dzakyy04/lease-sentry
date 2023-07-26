@@ -4,36 +4,56 @@
     <script src="{{ asset('assets/js/libs/datatable-btns.js?ver=3.0.3') }}"></script>
     <script src="{{ asset('assets/js/example-toastr.js?ver=3.0.3') }}"></script>
     <script>
-        const baseRoute = '{{ route('holiday.get', ':id') }}';
+        const holidayForm = $('#holidayForm');
+        const holidayModal = $('#holidayModal');
+        const dateInput = holidayModal.find('#date');
+        const nameInput = holidayModal.find('#name');
+        const modalTitle = holidayModal.find('#modalTitle');
 
-        function fetchDataAndPopulateModal(id, modal) {
-            $.ajax({
-                url: baseRoute.replace(':id', id),
-                type: 'GET',
-                success: function(data) {
-                    modal.find('#date').val(data.date);
-                    modal.find('#name').val(data.name);
-                },
-                error: function(xhr) {
-                    alert('Data tidak ditemukan');
+        async function fetchData(id) {
+            try {
+                const response = await fetch(`{{ route('holiday.get', ':id') }}`.replace(':id', id));
+                if (!response.ok) {
+                    throw new Error('Data tidak ditemukan');
                 }
-            });
+                const data = await response.json();
+                dateInput.val(data.date);
+                nameInput.val(data.name);
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        function clearModalForm() {
+            dateInput.val('');
+            nameInput.val('');
+        }
+
+        function setFormAction(form, id, action) {
+            const route = action === 'store' ? '{{ route('holiday.store') }}' : `{{ route('holiday.update', ':id') }}`
+                .replace(':id', id);
+            form.attr('action', route);
         }
 
         $(document).ready(function() {
-            // Edit modal
-            $(document).on('show.bs.modal', '#editHoliday', function(event) {
+            $(document).on('show.bs.modal', '#holidayModal', function(event) {
                 const button = $(event.relatedTarget);
                 const id = button.data('id');
-                const modal = $(this);
-                const editForm = $('#editFormHoliday');
+                const modalTitleText = button.data('modal-title');
 
-                fetchDataAndPopulateModal(id, modal);
+                modalTitle.text(modalTitleText);
 
-                editForm.attr('action', '{{ route('holiday.update', ':id') }}'.replace(':id', id));
+                if (id) {
+                    fetchData(id);
+                    setFormAction(holidayForm, id, 'update');
+                } else {
+                    clearModalForm();
+                    setFormAction(holidayForm, null, 'store');
+                }
             });
         });
     </script>
+
     @if (session()->has('success'))
         <script>
             let message = @json(session('success'));
@@ -54,7 +74,8 @@
             </div>
             <div class="card card-bordered card-preview">
                 <div class="card-inner">
-                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addHoliday">
+                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#holidayModal"
+                        data-modal-title="Tambah Hari Libur">
                         <span class="ni ni-plus"></span>
                         <span class="ms-1">Tambah Hari Libur</span>
                     </button>
@@ -76,9 +97,9 @@
                                     <td>{{ $holiday->name }}</td>
                                     <td class="text-center">
                                         <button class="btn btn-warning btn-xs rounded-pill" data-bs-toggle="modal"
-                                            data-bs-target="#editHoliday" data-id="{{ $holiday->id }}">
-                                            <em class="ni
-                                            ni-edit"></em>
+                                            data-bs-target="#holidayModal" data-modal-title="Edit Hari Libur"
+                                            data-id="{{ $holiday->id }}">
+                                            <em class="ni ni-edit"></em>
                                         </button>
                                         <button class="btn btn-danger btn-xs rounded-pill">
                                             <em class="ni ni-trash"></em>
@@ -93,53 +114,18 @@
         </div>
     </div>
 
-    {{-- Modal Tambah Data --}}
-    <div class="modal fade" id="addHoliday">
+    {{-- Modal --}}
+    <div class="modal fade" id="holidayModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Hari Libur</h5>
+                    <h5 class="modal-title" id="modalTitle"></h5>
                     <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <em class="icon ni ni-cross"></em>
                     </a>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('holiday.store') }}" method="POST" class="form-validate is-alter">
-                        @csrf
-                        <div class="form-group">
-                            <label class="form-label" for="date">Tanggal</label>
-                            <div class="form-control-wrap">
-                                <input type="date" class="form-control" id="date" name="date" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="name">Memperingati</label>
-                            <div class="form-control-wrap">
-                                <input type="text" class="form-control" id="name" name="name"
-                                    placeholder="Contoh: Hari Pancasila" required>
-                            </div>
-                        </div>
-                        <div class="form-group text-end">
-                            <button type="submit" class="btn btn-lg btn-primary">Simpan</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- Modal Edit Data --}}
-    <div class="modal fade" id="editHoliday">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Hari Libur</h5>
-                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <em class="icon ni ni-cross"></em>
-                    </a>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="POST" class="form-validate is-alter" id="editFormHoliday">
+                    <form action="" method="POST" class="form-validate is-alter" id="holidayForm">
                         @csrf
                         <div class="form-group">
                             <label class="form-label" for="date">Tanggal</label>
