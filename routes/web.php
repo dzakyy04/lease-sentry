@@ -32,4 +32,5 @@ Route::middleware('auth')->group(function () {
 
     // Hari Libur
     Route::get('hari-libur', [HolidayController::class, 'index'])->name('holiday.index');
+    Route::post('hari-libur', [HolidayController::class, 'store'])->name('holiday.store');
 });
