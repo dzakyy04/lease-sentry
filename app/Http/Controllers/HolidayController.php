@@ -34,4 +34,24 @@ class HolidayController extends Controller
 
         return back()->with('success', "$date berhasil ditambahkan menjadi hari libur");
     }
+
+    public function getHoliday($id)
+    {
+        $holiday = Holiday::find($id);
+        return response()->json($holiday);
+    }
+
+    public function update($id, Request $request)
+    {
+        $data = $request->validate([
+            'date' => 'required',
+            'name' => 'required',
+        ]);
+
+        $holiday = Holiday::findorFail($id);
+
+        $holiday->update($data);
+
+        return back()->with('success', "Data berhasil diedit");
+    }
 }

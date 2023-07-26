@@ -3,6 +3,37 @@
 @push('js')
     <script src="{{ asset('assets/js/libs/datatable-btns.js?ver=3.0.3') }}"></script>
     <script src="{{ asset('assets/js/example-toastr.js?ver=3.0.3') }}"></script>
+    <script>
+        const baseRoute = '{{ route('holiday.get', ':id') }}';
+
+        function fetchDataAndPopulateModal(id, modal) {
+            $.ajax({
+                url: baseRoute.replace(':id', id),
+                type: 'GET',
+                success: function(data) {
+                    modal.find('#date').val(data.date);
+                    modal.find('#name').val(data.name);
+                },
+                error: function(xhr) {
+                    alert('Data tidak ditemukan');
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            // Edit modal
+            $(document).on('show.bs.modal', '#editHoliday', function(event) {
+                const button = $(event.relatedTarget);
+                const id = button.data('id');
+                const modal = $(this);
+                const editForm = $('#editFormHoliday');
+
+                fetchDataAndPopulateModal(id, modal);
+
+                editForm.attr('action', '{{ route('holiday.update', ':id') }}'.replace(':id', id));
+            });
+        });
+    </script>
     @if (session()->has('success'))
         <script>
             let message = @json(session('success'));
@@ -44,12 +75,14 @@
                                     <td>{{ $holiday->formatted_date }}</td>
                                     <td>{{ $holiday->name }}</td>
                                     <td class="text-center">
-                                        <button class="btn btn-warning btn-xs rounded-pill">
-                                            <em class="ni ni-edit"></em>
+                                        <button class="btn btn-warning btn-xs rounded-pill" data-bs-toggle="modal"
+                                            data-bs-target="#editHoliday" data-id="{{ $holiday->id }}">
+                                            <em class="ni
+                                            ni-edit"></em>
                                         </button>
-                                        <span class="btn btn-danger btn-xs rounded-pill">
+                                        <button class="btn btn-danger btn-xs rounded-pill">
                                             <em class="ni ni-trash"></em>
-                                        </span>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -60,7 +93,7 @@
         </div>
     </div>
 
-    {{-- Modal --}}
+    {{-- Modal Tambah Data --}}
     <div class="modal fade" id="addHoliday">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -82,7 +115,43 @@
                         <div class="form-group">
                             <label class="form-label" for="name">Memperingati</label>
                             <div class="form-control-wrap">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Contoh: Hari Pancasila" required>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Contoh: Hari Pancasila" required>
+                            </div>
+                        </div>
+                        <div class="form-group text-end">
+                            <button type="submit" class="btn btn-lg btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal Edit Data --}}
+    <div class="modal fade" id="editHoliday">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Hari Libur</h5>
+                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="POST" class="form-validate is-alter" id="editFormHoliday">
+                        @csrf
+                        <div class="form-group">
+                            <label class="form-label" for="date">Tanggal</label>
+                            <div class="form-control-wrap">
+                                <input type="date" class="form-control" id="date" name="date" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="name">Memperingati</label>
+                            <div class="form-control-wrap">
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Contoh: Hari Pancasila" required>
                             </div>
                         </div>
                         <div class="form-group text-end">
