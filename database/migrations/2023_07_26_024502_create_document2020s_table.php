@@ -45,7 +45,11 @@ return new class extends Migration
                 JSON_UNQUOTE(JSON_EXTRACT(progress, '$.progress_selesai.day'))"
             );
             $table->string('status_progress')->virtualAs(
-                "CASE WHEN JSON_UNQUOTE(JSON_EXTRACT(progress, '$.progress_selesai.isCompleted')) = 'true' THEN 'Selesai' ELSE 'Diproses' END"
+                "CASE WHEN 
+                JSON_UNQUOTE(JSON_EXTRACT(progress, '$.progress_masuk.isCompleted')) = 'true' AND
+                JSON_UNQUOTE(JSON_EXTRACT(progress, '$.progress_dinilai.isCompleted')) = 'true' AND
+                JSON_UNQUOTE(JSON_EXTRACT(progress, '$.progress_selesai.isCompleted')) = 'true'
+            THEN 'Selesai' ELSE 'Diproses' END"
             );
             $table->timestamps();
         });
