@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ConceptorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HolidayController;
 
@@ -31,9 +32,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
     // Hari Libur
-    Route::get('hari-libur', [HolidayController::class, 'index'])->name('holiday.index');
-    Route::post('hari-libur', [HolidayController::class, 'store'])->name('holiday.store');
+    Route::get('/hari-libur', [HolidayController::class, 'index'])->name('holiday.index');
+    Route::post('/hari-libur', [HolidayController::class, 'store'])->name('holiday.store');
     Route::get('/hari-libur/{id}', [HolidayController::class, 'getHoliday'])->name('holiday.get');
     Route::post('/hari-libur/{id}', [HolidayController::class, 'update'])->name('holiday.update');
     Route::delete('/hari-libur/{id}', [HolidayController::class, 'delete'])->name('holiday.delete');
+
+    // Konseptor
+    Route::get('/konseptor', [ConceptorController::class, 'index'])->name('conceptor.index');
+    Route::post('/konseptor', [ConceptorController::class, 'store'])->name('conceptor.store');
 });
