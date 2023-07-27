@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConceptorController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Document2020Controller;
 use App\Http\Controllers\HolidayController;
 
 /*
@@ -43,4 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/konseptor', [ConceptorController::class, 'store'])->name('conceptor.store');
     Route::get('/konseptor/{id}', [ConceptorController::class, 'getConceptor'])->name('conceptor.get');
     Route::post('/konseptor/{id}', [ConceptorController::class, 'update'])->name('conceptor.update');
+
+
+    //Document2020
+    Route::get('/dokumen/2020', [Document2020Controller::class, 'index'])->name('dokumen2020.index');
+
 });

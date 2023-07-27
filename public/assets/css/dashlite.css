@@ -24163,6 +24163,11 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child:before
   margin-right: 0.25rem;
 }
 
+.dtr-title br {
+  display: none;
+}
+
+
 .nk-tb-col-check, .nk-tb-col-tools {
   pointer-events: none;
 }
