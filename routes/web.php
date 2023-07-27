@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConceptorController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Document2020Controller;
 use App\Http\Controllers\HolidayController;
 
 /*
@@ -44,4 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/konseptor/{id}', [ConceptorController::class, 'getConceptor'])->name('conceptor.get');
     Route::post('/konseptor/{id}/edit', [ConceptorController::class, 'update'])->name('conceptor.update');
     Route::delete('/konseptor/{id}/hapus', [ConceptorController::class, 'delete'])->name('conceptor.delete');
+
+    //Document2020
+    Route::get('/dokumen/2020', [Document2020Controller::class, 'index'])->name('dokumen2020.index');
+
 });
