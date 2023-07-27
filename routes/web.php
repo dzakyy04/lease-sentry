@@ -41,4 +41,6 @@ Route::middleware('auth')->group(function () {
     // Konseptor
     Route::get('/konseptor', [ConceptorController::class, 'index'])->name('conceptor.index');
     Route::post('/konseptor', [ConceptorController::class, 'store'])->name('conceptor.store');
+    Route::get('/konseptor/{id}', [ConceptorController::class, 'getConceptor'])->name('conceptor.get');
+    Route::post('/konseptor/{id}', [ConceptorController::class, 'update'])->name('conceptor.update');
 });

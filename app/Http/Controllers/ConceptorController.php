@@ -26,4 +26,23 @@ class ConceptorController extends Controller
 
         return back()->with('success', "$request->name berhasil ditambahkan menjadi konseptor");
     }
+
+    public function getConceptor($id)
+    {
+        $conceptor = Conceptor::find($id);
+        return response()->json($conceptor);
+    }
+
+    public function update($id, Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required',
+            'whatsapp_number' => 'required'
+        ]);
+
+        $conceptor = Conceptor::findOrFail($id);
+        $conceptor->update($data);
+
+        return back()->with('success', "Data berhasil diedit");
+    }
 }

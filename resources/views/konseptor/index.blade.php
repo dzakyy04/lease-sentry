@@ -8,18 +8,44 @@
         const conceptorForm = $('#conceptorForm');
         const conceptorModal = $('#conceptorModal');
         const nameInput = conceptorModal.find('#name');
-        const whatsappNumberInput = conceptorModal.find('#date');
+        const whatsappNumberInput = conceptorModal.find('#whatsapp_number');
         const modalTitle = conceptorModal.find('#modalTitle');
+
+        async function fetchData(id) {
+            try {
+                const response = await fetch('{{ route('conceptor.get', ':id') }}'.replace(':id', id));
+                if (!response.ok) {
+                    throw new Error('Data tidak ditemukan');
+                }
+                const data = await response.json();
+                nameInput.val(data.name);
+                whatsappNumberInput.val(data.whatsapp_number);
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        function clearModalForm() {
+            nameInput.val('');
+            whatsappNumberInput.val('');
+        }
 
         $(document).ready(function() {
             // Add and Edit Modal
             $(document).on('show.bs.modal', '#conceptorModal', function(event) {
                 const button = $(event.relatedTarget);
+                const id = button.data('id');
                 const modalTitleText = button.data('modal-title');
 
                 modalTitle.text(modalTitleText);
 
-                conceptorForm.attr('action', '{{ route('conceptor.store') }}');
+                if (id) {
+                    fetchData(id);
+                    conceptorForm.attr('action', '{{ route('conceptor.update', ':id') }}'.replace(':id', id));
+                } else {
+                    clearModalForm();
+                    conceptorForm.attr('action', '{{ route('conceptor.store') }}');
+                }
             });
         });
     </script>
