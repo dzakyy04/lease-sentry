@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('tanggal_surat_masuk');
             $table->date('tanggal_surat_diterima');
             $table->string('jenis_persetujuan');
-            $table->foreignId('conceptor_id')->constrained();
+            $table->foreignId('conceptor_id')->nullable()->constrained()->onDelete('set null');
             $table->string('nomor_nd_permohonan_penilaian')->nullable();
             $table->date('tanggal_nd_permohonan_penilaian')->nullable();
             // Progress Penilaian
@@ -35,20 +35,20 @@ return new class extends Migration
             // Tambahan
             $table->string('status_masa_aktif')->nullable();
             $table->json('progress')->default(json_encode([
-                'progress_masuk' => ['day' => 0, 'isCompleted' => false],
-                'progress_dinilai' => ['day' => 0, 'isCompleted' => false],
-                'progress_selesai' => ['day' => 0, 'isCompleted' => false],
+                'masuk' => ['day' => 0, 'isCompleted' => false],
+                'dinilai' => ['day' => 0, 'isCompleted' => false],
+                'selesai' => ['day' => 0, 'isCompleted' => false],
             ]));
             $table->integer('total_hari')->virtualAs(
-                "JSON_UNQUOTE(JSON_EXTRACT(progress, '$.progress_masuk.day')) +
-                JSON_UNQUOTE(JSON_EXTRACT(progress, '$.progress_dinilai.day')) +
-                JSON_UNQUOTE(JSON_EXTRACT(progress, '$.progress_selesai.day'))"
+                "JSON_UNQUOTE(JSON_EXTRACT(progress, '$.masuk.day')) +
+                JSON_UNQUOTE(JSON_EXTRACT(progress, '$.dinilai.day')) +
+                JSON_UNQUOTE(JSON_EXTRACT(progress, '$.selesai.day'))"
             );
             $table->string('status_progress')->virtualAs(
                 "CASE WHEN 
-                JSON_UNQUOTE(JSON_EXTRACT(progress, '$.progress_masuk.isCompleted')) = 'true' AND
-                JSON_UNQUOTE(JSON_EXTRACT(progress, '$.progress_dinilai.isCompleted')) = 'true' AND
-                JSON_UNQUOTE(JSON_EXTRACT(progress, '$.progress_selesai.isCompleted')) = 'true'
+                JSON_UNQUOTE(JSON_EXTRACT(progress, '$.masuk.isCompleted')) = 'true' AND
+                JSON_UNQUOTE(JSON_EXTRACT(progress, '$.dinilai.isCompleted')) = 'true' AND
+                JSON_UNQUOTE(JSON_EXTRACT(progress, '$.selesai.isCompleted')) = 'true'
             THEN 'Selesai' ELSE 'Diproses' END"
             );
             $table->timestamps();

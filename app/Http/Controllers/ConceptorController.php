@@ -45,4 +45,12 @@ class ConceptorController extends Controller
 
         return back()->with('success', "Data berhasil diedit");
     }
+
+    public function delete($id)
+    {
+        $conceptor = Conceptor::findorFail($id);
+        $conceptor->delete();
+
+        return back()->with('success', "Data berhasil dihapus");
+    }
 }

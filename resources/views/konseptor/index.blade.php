@@ -11,6 +11,10 @@
         const whatsappNumberInput = conceptorModal.find('#whatsapp_number');
         const modalTitle = conceptorModal.find('#modalTitle');
 
+        const deleteConceptorForm = $('#deleteConceptorForm');
+        const deleteConceptorModal = $('#deleteConceptorModal');
+        const deleteMessage = deleteConceptorModal.find('#deleteMessage');
+
         async function fetchData(id) {
             try {
                 const response = await fetch('{{ route('conceptor.get', ':id') }}'.replace(':id', id));
@@ -20,6 +24,9 @@
                 const data = await response.json();
                 nameInput.val(data.name);
                 whatsappNumberInput.val(data.whatsapp_number);
+                deleteMessage.html(
+                    `Apakah anda yakin ingin menghapus <strong>${data.name} (${data.whatsapp_number})</strong> sebagai konseptor?`
+                )
             } catch (error) {
                 alert(error.message);
             }
@@ -41,11 +48,21 @@
 
                 if (id) {
                     fetchData(id);
-                    conceptorForm.attr('action', '{{ route('conceptor.update', ':id') }}'.replace(':id', id));
+                    conceptorForm.attr('action', '{{ route('conceptor.update', ':id') }}'.replace(':id',
+                        id));
                 } else {
                     clearModalForm();
                     conceptorForm.attr('action', '{{ route('conceptor.store') }}');
                 }
+            });
+
+            $(document).on('show.bs.modal', '#deleteConceptorModal', function(event) {
+                const button = $(event.relatedTarget);
+                const id = button.data('id');
+
+                fetchData(id);
+                deleteConceptorForm.attr('action', '{{ route('conceptor.delete', ':id') }}'.replace(':id',
+                    id));
             });
         });
     </script>
