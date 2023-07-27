@@ -36,12 +36,6 @@
             nameInput.val('');
         }
 
-        function setFormAction(form, id, action) {
-            const route = action === 'store' ? '{{ route('holiday.store') }}' : `{{ route('holiday.update', ':id') }}`
-                .replace(':id', id);
-            form.attr('action', route);
-        }
-
         $(document).ready(function() {
             // Add and Edit Modal
             $(document).on('show.bs.modal', '#holidayModal', function(event) {
@@ -99,7 +93,7 @@
                     <table class="datatable-init-export table-responsive table-bordered nowrap table"
                         data-export-title="Export">
                         <thead>
-                            <tr class="table-primary">
+                            <tr class="table-light">
                                 <th class="text-center">No</th>
                                 <th class="text-center">Tanggal</th>
                                 <th class="text-center">Memperingati</th>
