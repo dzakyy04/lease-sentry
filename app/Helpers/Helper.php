@@ -3,7 +3,9 @@
 namespace App\Helpers;
 
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use App\Models\Holiday;
+use GuzzleHttp\Psr7\Request;
 
 class Helper
 {
@@ -31,5 +33,20 @@ class Helper
             $end
         );
         return $difference;
+    }
+
+    public static function sendWhatsapp($number, $message)
+    {
+        $client = new Client();
+        $options = [
+            'json' => [
+                'device_id' => env('DEVICE_ID'),
+                'number' => $number,
+                'message' => $message
+            ]
+        ];
+        $request = new Request('POST', 'https://app.whacenter.com/api/send');
+        $res = $client->sendAsync($request, $options)->wait();
+        return $res->getBody()->getContents();
     }
 }
