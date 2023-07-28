@@ -9,31 +9,45 @@ use GuzzleHttp\Psr7\Request;
 
 class Helper
 {
-    public static function isHoliday($date)
-    {
-        $holiday = Holiday::where('date', $date)->first();
-        return $holiday ? true : false;
-    }
-
     public static function isWorkingDay($date)
     {
         $carbonDate = Carbon::parse($date);
-        return $carbonDate->isWeekend() || self::isHoliday($date) ? false : true;
+        $holiday = Holiday::where('date', $date)->first();
+
+        return $carbonDate->isWeekend() || $holiday ? false : true;
     }
 
     public static function dayDifference($startDate, $endDate)
     {
-        $start = Carbon::parse($startDate);
-        $end = Carbon::parse($endDate);
+        $start = strtotime($startDate);
+        $end = strtotime($endDate);
 
-        $difference = $start->diffInDaysFiltered(
-            function (Carbon $date) {
-                return !$date->isWeekend() && !Helper::isHoliday($date);
-            },
-            $end
-        );
+        $holidays = self::loadHolidays();
+
+        $difference = 0;
+        while ($start < $end) {
+            $startWeekday = date('N', $start);
+            $formattedDate = date('Y-m-d', $start);
+
+            if ($startWeekday <= 5 && !isset($holidays[$formattedDate])) {
+                $difference++;
+            }
+            $start = strtotime('+1 day', $start);
+        }
         return $difference;
     }
+
+    public static function loadHolidays()
+    {
+        $holidays = Holiday::all();
+        $formattedHolidays = [];
+        foreach ($holidays as $holiday) {
+            $formattedHolidays[$holiday->date] = true;
+        }
+        return $formattedHolidays;
+    }
+
+
 
     public static function sendWhatsapp($number, $message)
     {
