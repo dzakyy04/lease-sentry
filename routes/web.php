@@ -47,6 +47,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/konseptor/{id}/hapus', [ConceptorController::class, 'delete'])->name('conceptor.delete');
 
     //Document2020
-    Route::get('/dokumen/2020', [Document2020Controller::class, 'index'])->name('dokumen2020.index');
+    Route::get('/dokumen/2020', [Document2020Controller::class, 'index'])->name('document2020.index');
+    Route::get('/dokumen/2020/tambah', [Document2020Controller::class, 'create'])->name('document2020.create');
+    Route::post('/dokumen/2020/tambah', [Document2020Controller::class, 'store'])->name('document2020.store');
+    Route::get('/dokumen/2020/{id}/edit', [Document2020Controller::class, 'edit'])->name('document2020.edit');
+    Route::post('/dokumen/2020/{id}/edit', [Document2020Controller::class, 'update'])->name('document2020.update');
+    Route::delete('/dokumen/2020/{id}/hapus', [Document2020Controller::class, 'delete'])->name('document2020.delete');
+
 
 });

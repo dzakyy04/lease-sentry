@@ -11,10 +11,23 @@
             });
         </script>
     @endif
+    <script>
+        $(document).on('show.bs.modal', '#deleteDocument2020Modal', function(event) {
+            const button = $(event.relatedTarget);
+            const id = button.data('id');
+            const satker = button.data('satker');
+            const modal = $(this);
+            const deleteForm = $('#deleteDocument2020Form');
+            const deleteMessage = $('#deleteMessage');
+
+            deleteMessage.html(`Apakah anda yakin ingin menghapus dokumen <strong>${satker}</strong>`);
+            deleteForm.attr('action', '{{ route('document2020.delete', ':id') }}'.replace(':id', id));
+        });
+    </script>
 @endpush
 
 @section('content')
-    <div class="components-preview wide-md mx-auto">
+    <div class="components-preview wide-xl mx-auto">
         <div class="nk-block nk-block-lg">
             <div class="nk-block-head">
                 <div class="nk-block-head-content">
@@ -23,14 +36,17 @@
             </div>
             <div class="card card-bordered card-preview">
                 <div class="card-inner">
-                    <button type="button" class="btn btn-primary mb-3">
-                        <span class="ni ni-plus"></span>
-                        <span class="ms-1">Tambah Dokumen</span>
-                    </button>
+                    @can(['admin-pkn-super-admin'])
+                        <a href="{{ route('document2020.create') }}" class="btn btn-primary mb-3">
+                            <span class="ni ni-plus"></span>
+                            <span class="ms-1">Tambah Dokumen</span>
+                        </a>
+                    @endcan
                     <table class="datatable-init-export table-responsive table-bordered nowrap table"
                         data-export-title="Export">
                         <thead>
                             <tr class="table-light">
+                                <th class="text-nowrap text-center align-middle">No</th>
                                 <th class="text-nowrap text-center align-middle">Satker</th>
                                 <th class="text-nowrap text-center align-middle">
                                     Nomor <br class="break">Surat Masuk
@@ -41,7 +57,7 @@
                                 <th class="text-nowrap text-center align-middle">
                                     Tanggal <br class="break">Surat Diterima
                                 </th>
-                                
+
                                 <th class="text-nowrap text-center align-middle">
                                     Jenis <br class="break">Persetujuan
                                 </th>
@@ -66,7 +82,8 @@
                         <tbody>
                             @foreach ($documents as $index => $document)
                                 <tr>
-                                    <td>{{ $document->satker }}</td>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td class="satker">{{ $document->satker }}</td>
                                     <td>{{ $document->nomor_surat_masuk }}</td>
                                     <td>{{ $document->surat_masuk_date_formatted }}</td>
                                     <td>{{ $document->surat_diterima_date_formatted }}</td>
@@ -90,14 +107,17 @@
 
                                     <td>{{ $document->total_hari }}</td>
                                     <td>{{ $document->status_masa_aktif }}</td>
-                                    
+
                                     <td class="text-nowrap text-center">
-                                        <a href="" class="btn btn-warning btn-xs rounded-pill">
+                                        <a href="{{ route('document2020.edit', $document->id) }}"
+                                            class="btn btn-warning btn-xs rounded-pill">
                                             <em class="ni ni-edit"></em>
                                         </a>
-                                        <a href="" class="btn btn-danger btn-xs rounded-pill">
+                                        <button class="btn btn-danger btn-xs rounded-pill" data-bs-toggle="modal"
+                                            data-bs-target="#deleteDocument2020Modal" data-id="{{ $document->id }}"
+                                            data-satker="{{ $document->satker }}">
                                             <em class="ni ni-trash"></em>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -108,57 +128,21 @@
         </div>
     </div>
 
-    {{-- Add and Edit Modal --}}
-    <div class="modal fade" id="conceptorModal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle"></h5>
-                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <em class="icon ni ni-cross"></em>
-                    </a>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="POST" class="form-validate is-alter" id="conceptorForm">
-                        @csrf
-                        <div class="form-group">
-                            <label class="form-label" for="name">Nama</label>
-                            <div class="form-control-wrap">
-                                <input type="text" class="form-control" id="name" name="name"
-                                    placeholder="Contoh: Aldi Taher" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="whatsapp_number">Nomor whatsapp</label>
-                            <div class="form-control-wrap">
-                                <input type="text" class="form-control" id="whatsapp_number" name="whatsapp_number"
-                                    placeholder="Contoh: 08139384183" required>
-                            </div>
-                        </div>
-                        <div class="form-group text-end">
-                            <button type="submit" class="btn btn-lg btn-primary">Simpan</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     {{-- Delete Modal --}}
-    <div class="modal fade" id="deleteConceptorModal">
+    <div class="modal fade" id="deleteDocument2020Modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Hapus Konseptor</h5>
+                    <h5 class="modal-title">Hapus Dokumen 2020</h5>
                     <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <em class="icon ni ni-cross"></em>
                     </a>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST" class="form-validate is-alter" id="deleteConceptorForm">
+                    <form action="" method="POST" class="form-validate is-alter" id="deleteDocument2020Form">
                         @csrf
                         @method('delete')
-                        <div id="deleteMessage"></div>
+                        <div class="mb-3" id="deleteMessage"></div>
                         <div class="form-group text-end">
                             <button type="submit" class="btn btn-lg btn-danger">Hapus</button>
                         </div>

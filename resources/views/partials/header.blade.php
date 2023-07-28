@@ -37,58 +37,6 @@
                                             <div class="nk-notification-time">2 hrs ago</div>
                                         </div>
                                     </div>
-                                    <div class="nk-notification-item dropdown-inner">
-                                        <div class="nk-notification-icon">
-                                            <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
-                                        </div>
-                                        <div class="nk-notification-content">
-                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed
-                                            </div>
-                                            <div class="nk-notification-time">2 hrs ago</div>
-                                        </div>
-                                    </div>
-                                    <div class="nk-notification-item dropdown-inner">
-                                        <div class="nk-notification-icon">
-                                            <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
-                                        </div>
-                                        <div class="nk-notification-content">
-                                            <div class="nk-notification-text">You have requested to
-                                                <span>Widthdrawl</span>
-                                            </div>
-                                            <div class="nk-notification-time">2 hrs ago</div>
-                                        </div>
-                                    </div>
-                                    <div class="nk-notification-item dropdown-inner">
-                                        <div class="nk-notification-icon">
-                                            <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
-                                        </div>
-                                        <div class="nk-notification-content">
-                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed
-                                            </div>
-                                            <div class="nk-notification-time">2 hrs ago</div>
-                                        </div>
-                                    </div>
-                                    <div class="nk-notification-item dropdown-inner">
-                                        <div class="nk-notification-icon">
-                                            <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
-                                        </div>
-                                        <div class="nk-notification-content">
-                                            <div class="nk-notification-text">You have requested to
-                                                <span>Widthdrawl</span>
-                                            </div>
-                                            <div class="nk-notification-time">2 hrs ago</div>
-                                        </div>
-                                    </div>
-                                    <div class="nk-notification-item dropdown-inner">
-                                        <div class="nk-notification-icon">
-                                            <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>
-                                        </div>
-                                        <div class="nk-notification-content">
-                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed
-                                            </div>
-                                            <div class="nk-notification-time">2 hrs ago</div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="dropdown-foot center">
@@ -103,8 +51,8 @@
                                     <em class="icon ni ni-user-alt"></em>
                                 </div>
                                 <div class="user-info d-none d-xl-block">
-                                    <div class="user-status user-status-role">Admin PKN</div>
-                                    <div class="user-name dropdown-indicator">Iman Carrazi Syamsidi</div>
+                                    <div class="user-status user-status-role">{{ Auth::user()->role }}</div>
+                                    <div class="user-name dropdown-indicator">{{ Auth::user()->name }}</div>
                                 </div>
                             </div>
                         </a>
