@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\Helper;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use App\Models\Document2020;
@@ -42,29 +43,16 @@ class WhatsappLeaseReminder extends Command
                 ->toDateString();
 
             if ($today == $alertDate) {
-                $client = new Client();
                 $satker = [
-                    'json' => [
-                        'device_id' => env('DEVICE_ID'),
-                        'number' => $document->nomor_whatsapp_satker,
-                        'message' => 'Ini pesan untuk satker'
-                    ]
+                    'number' => $document->nomor_whatsapp_satker,
+                    'message' => 'Ini pesan untuk satker',
                 ];
                 $conceptor = [
-                    'json' => [
-                        'device_id' => env('DEVICE_ID'),
-                        'number' => $document->conceptor->whatsapp_number,
-                        'message' => 'Ini pesan untuk konseptor'
-                    ]
+                    'number' => $document->conceptor->whatsapp_number,
+                    'message' => 'Ini pesan untuk konseptor'
                 ];
-
-                $request = new Request('POST', 'https://app.whacenter.com/api/send');
-                // Whatsapp to Satker
-                $responseSatker = $client->sendAsync($request, $satker)->wait();
-                $this->info($responseSatker->getBody());
-                // Whatsapp to Conceptor
-                $responseConceptor = $client->sendAsync($request, $conceptor)->wait();
-                $this->info($responseConceptor->getBody());
+                $this->info(Helper::sendWhatsapp($satker['number'], $satker['message']));
+                $this->info(Helper::sendWhatsapp($conceptor['number'], $conceptor['message']));
             }
         }
     }
