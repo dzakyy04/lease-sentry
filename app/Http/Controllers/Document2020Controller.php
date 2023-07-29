@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use App\Models\Conceptor;
 use App\Models\Document2020;
 use Illuminate\Http\Request;
+use App\Imports\Document2020Import;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Document2020Controller extends Controller
 {
@@ -130,5 +132,15 @@ class Document2020Controller extends Controller
         $document->delete();
 
         return back()->with('success', "Dokumen berhasil dihapus");
+    }
+
+    public function import(Request $request)
+    {
+        $file = $request->file('file');
+        $fileName = $file->getClientOriginalName();
+        $file->move('Document2020', $fileName);
+
+        Excel::import(new Document2020Import, public_path('Document2020/' . $fileName));
+        return redirect()->route('document2020.index')->with('success', "Dokumen berhasil diimport");
     }
 }

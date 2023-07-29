@@ -18317,7 +18317,6 @@ div.dataTables_wrapper div.dataTables_length .input-group-lg > select,
 
 .ni-file-xls:before {
   content: "\ea51";
-  color: var(--bs-success);
 }
 
 .ni-file-zip:before {

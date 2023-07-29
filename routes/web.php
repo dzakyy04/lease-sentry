@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dokumen/2020/{id}/edit', [Document2020Controller::class, 'edit'])->name('document2020.edit');
     Route::post('/dokumen/2020/{id}/edit', [Document2020Controller::class, 'update'])->name('document2020.update');
     Route::delete('/dokumen/2020/{id}/hapus', [Document2020Controller::class, 'delete'])->name('document2020.delete');
+    Route::post('/dokumen/2020/import', [Document2020Controller::class, 'import'])->name('document2020.import');
 
 
 });

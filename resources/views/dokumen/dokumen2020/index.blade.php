@@ -37,10 +37,16 @@
             <div class="card card-bordered card-preview">
                 <div class="card-inner">
                     @can(['admin-pkn-super-admin'])
-                        <a href="{{ route('document2020.create') }}" class="btn btn-primary mb-3">
-                            <span class="ni ni-plus"></span>
-                            <span class="ms-1">Tambah Dokumen</span>
-                        </a>
+                        <div class="d-flex">
+                            <a href="{{ route('document2020.create') }}" class="btn btn-primary mb-2 me-2">
+                                <em class="icon ni ni-plus me-1"></em> Tambah Dokumen</span>
+                            </a>
+                            <button type="button" class="btn btn-secondary mb-2" data-bs-toggle="modal"
+                                data-bs-target="#uploadModal">
+                                <em class="icon ni ni-upload me-1"></em> Import Dokumen
+                            </button>
+
+                        </div>
                     @endcan
                     <table class="datatable-init-export table-responsive table-bordered nowrap table"
                         data-export-title="Export">
@@ -64,6 +70,9 @@
                                 <th class="text-nowrap text-center align-middle">Status <br class="break">Progress</th>
                                 <th class="text-nowrap text-center align-middle">
                                     Konseptor
+                                </th>
+                                <th class="text-nowrap text-center align-middle">
+                                    Nomor Whatsapp Satker
                                 </th>
                                 <th class="text-nowrap text-center align-middle">Nomor ND Permohonan Penilaian</th>
                                 <th class="text-nowrap text-center align-middle">Tanggal ND Permohonan Penilaian</th>
@@ -95,6 +104,7 @@
                                         </span>
                                     </td>
                                     <td>{{ $document->conceptor->name }}</td>
+                                    <td>{{ $document->nomor_whatsapp_satker }}</td>
                                     <td>{{ $document->nomor_nd_permohonan_penilaian }}</td>
                                     <td>{{ $document->tanggal_nd_permohonan_penilaian }}</td>
                                     <td>{{ $document->nomor_ndr_penilaian }}</td>
@@ -124,6 +134,35 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Upload Modal --}}
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel">Upload File Excel</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('document2020.import') }}" class="form-validate is-alter" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Pilih file Excel</label>
+                            <input type="file" class="form-control" id="file" name="file">
+                            <div id="fileHelp" class="form-text">File Excel harus berformat .xlsx</div>
+                        </div>
+                        <div ">
+                            <a href="{{ asset('assets/template-file/Template.xlsx') }}" class="btn btn-outline-success btn-dim"><em class="icon ni ni-file-xls me-1"></em> Download Template
+                                Excel</a>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-secondary">Import</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
