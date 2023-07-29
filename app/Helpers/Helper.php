@@ -37,7 +37,7 @@ class Helper
         return $difference;
     }
 
-    public static function loadHolidays()
+    private static function loadHolidays()
     {
         $holidays = Holiday::all();
         $formattedHolidays = [];
@@ -46,8 +46,6 @@ class Helper
         }
         return $formattedHolidays;
     }
-
-
 
     public static function sendWhatsapp($number, $message)
     {
