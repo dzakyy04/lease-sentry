@@ -2,9 +2,7 @@
 
 namespace App\Console\Commands;
 
-use Carbon\Carbon;
 use App\Helpers\Helper;
-use App\Models\Holiday;
 use App\Models\Document2020;
 use Illuminate\Console\Command;
 
@@ -29,16 +27,16 @@ class WhatsappSubmitProgress extends Command
      */
     public function handle()
     {
-        $today = '2023-07-31';
+        $today = now()->toDateString();
+        if (!Helper::isWorkingDay($today)) {
+            return;
+        }
+
         $document2020 = Document2020::with('conceptor')
             ->whereJsonContains('progress->masuk', ['isCompleted' => false])
             ->get();
 
         $documents = $document2020;
-
-        if (!Helper::isWorkingDay($today)) {
-            return;
-        }
 
         foreach ($documents as $document) {
             $progress = json_decode($document->progress);
@@ -47,9 +45,7 @@ class WhatsappSubmitProgress extends Command
             $conceptorNumber = $document->conceptor->whatsapp_number;
 
             if ($document->jenis_persetujuan == 'Sewa') {
-                if ($totalDays == 0) {
-                    $progress->masuk->day = $totalDays + 1;
-                } elseif ($totalDays == 1) {
+                if ($totalDays == 1) {
                     $message = 'Pesan H-1';
                     Helper::sendWhatsapp($conceptorNumber, $message);
                     $progress->masuk->day = $totalDays + 1;
@@ -57,11 +53,10 @@ class WhatsappSubmitProgress extends Command
                     $message = 'Pesan Hari-H';
                     Helper::sendWhatsapp($conceptorNumber, $message);
                     $progress->masuk->isCompleted = true;
+                    $progress->masuk->completion_date = $today;
                 }
             } else {
-                if ($totalDays < 2) {
-                    $progress->masuk->day = $totalDays + 1;
-                } elseif ($totalDays == 2) {
+                if ($totalDays == 2) {
                     $message = 'Pesan H-1';
                     Helper::sendWhatsapp($conceptorNumber, $message);
                     $progress->masuk->day = $totalDays + 1;
@@ -69,9 +64,11 @@ class WhatsappSubmitProgress extends Command
                     $message = 'Pesan Hari-H';
                     Helper::sendWhatsapp($conceptorNumber, $message);
                     $progress->masuk->isCompleted = true;
+                    $progress->masuk->completion_date = $today;
                 }
             }
 
+            $progress->masuk->day = $totalDays;
             $document->update([
                 'progress' => json_encode($progress)
             ]);
