@@ -6,21 +6,21 @@ use App\Helpers\Helper;
 use App\Models\Document2020;
 use Illuminate\Console\Command;
 
-class WhatsappSubmitProgress extends Command
+class WhatsappCompleteProgress extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'whatsapp:submit-progress';
+    protected $signature = 'whatsapp:complete-progress';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Send a reminder message to the pkn admin to quickly complete the document';
+    protected $description = 'Command description';
 
     /**
      * Execute the console command.
@@ -33,14 +33,16 @@ class WhatsappSubmitProgress extends Command
         }
 
         $document2020 = Document2020::with('conceptor')
-            ->whereJsonContains('progress->masuk', ['isCompleted' => false])
+            ->whereJsonContains('progress->masuk', ['isCompleted' => true])
+            ->whereJsonContains('progress->dinilai', ['isCompleted' => true])
+            ->whereJsonContains('progress->selesai', ['isCompleted' => false])
             ->get();
 
         $documents = $document2020;
 
-        foreach ($documents as $document) {
+        foreach ($documents as  $document) {
             $progress = json_decode($document->progress);
-            $startDate = $document->tanggal_surat_diterima;
+            $startDate = $progress->dinilai->completion_date;
             $totalDays = Helper::dayDifference($startDate, $today);
             $conceptorNumber = $document->conceptor->whatsapp_number;
 
@@ -51,18 +53,18 @@ class WhatsappSubmitProgress extends Command
                 } elseif ($totalDays == 2) {
                     $message = 'Pesan Hari-H';
                     Helper::sendWhatsapp($conceptorNumber, $message);
-                    $progress->masuk->isCompleted = true;
-                    $progress->masuk->completion_date = $today;
+                    $progress->selesai->isCompleted = true;
+                    $progress->selesai->completion_date = $today;
                 }
             } else {
-                if ($totalDays == 2) {
+                if ($totalDays == 3) {
                     $message = 'Pesan H-1';
                     Helper::sendWhatsapp($conceptorNumber, $message);
-                } elseif ($totalDays == 3) {
+                } elseif ($totalDays == 4) {
                     $message = 'Pesan Hari-H';
                     Helper::sendWhatsapp($conceptorNumber, $message);
-                    $progress->masuk->isCompleted = true;
-                    $progress->masuk->completion_date = $today;
+                    $progress->selesai->isCompleted = true;
+                    $progress->selesai->completion_date = $today;
                 }
             }
 

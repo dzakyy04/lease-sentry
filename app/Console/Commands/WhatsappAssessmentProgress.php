@@ -48,7 +48,6 @@ class WhatsappAssessmentProgress extends Command
             if ($totalDays == 14) {
                 $message = 'Pesan H-1';
                 Helper::sendWhatsapp($number, $message);
-                $progress->dinilai->day = $totalDays + 1;
             } elseif ($totalDays == 15) {
                 $message = 'Pesan Hari-H';
                 Helper::sendWhatsapp($number, $message);
