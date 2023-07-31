@@ -92,7 +92,7 @@ class Document2020Controller extends Controller
 
         if ($request->nomor_nd_permohonan_penilaian && $request->tanggal_nd_permohonan_penilaian) {
             $data['progress'] = json_encode([
-                'masuk' => ['day' => $totalDays, 'isCompleted' => true, 'completion_date' => null],
+                'masuk' => ['day' => $totalDays, 'isCompleted' => true, 'completion_date' => now()->toDateString()],
                 'dinilai' => ['day' => 0, 'isCompleted' => false, 'completion_date' => null],
                 'selesai' => ['day' => 0, 'isCompleted' => false, 'completion_date' => null],
             ]);
@@ -137,7 +137,8 @@ class Document2020Controller extends Controller
         ]);
 
         $document = Document2020::with('conceptor')->findOrFail($id);
-        $progress = json_decode($document->progress, true);
+        $progress = json_decode($document->progress);
+        $today = now()->toDateString();
 
         $completed1 = $request->nomor_nd_permohonan_penilaian && $request->tanggal_nd_permohonan_penilaian;
         $completed2 = $request->nomor_ndr_penilaian && $request->tanggal_ndr_diterima_penilaian;
@@ -145,15 +146,24 @@ class Document2020Controller extends Controller
             $request->tanggal_surat_persetujuan_penolakan && $request->nilai_proporsional_harga_perolehan_nilai_bmn;
 
         if ($completed1) {
-            $progress['masuk']['isCompleted'] = true;
+            if ($progress->masuk->completion_date == null) {
+                $progress->masuk->completion_date = $today;
+            }
+            $progress->masuk->isCompleted = true;
         }
 
         if ($completed2) {
-            $progress['dinilai']['isCompleted'] = true;
+            if ($progress->dinilai->completion_date == null) {
+                $progress->dinilai->completion_date = $today;
+            }
+            $progress->dinilai->isCompleted = true;
         }
 
         if ($completed3) {
-            $progress['selesai']['isCompleted'] = true;
+            if ($progress->selesai->completion_date == null) {
+                $progress->selesai->completion_date = $today;
+            }
+            $progress->selesai->isCompleted = true;
         }
 
         $data['progress'] = json_encode($progress);
