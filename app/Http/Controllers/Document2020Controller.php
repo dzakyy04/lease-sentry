@@ -150,6 +150,9 @@ class Document2020Controller extends Controller
                 $progress->masuk->completion_date = $today;
             }
             $progress->masuk->isCompleted = true;
+        } else {
+            $progress->masuk->completion_date = null;
+            $progress->masuk->isCompleted = false;
         }
 
         if ($completed2) {
@@ -157,6 +160,9 @@ class Document2020Controller extends Controller
                 $progress->dinilai->completion_date = $today;
             }
             $progress->dinilai->isCompleted = true;
+        } else {
+            $progress->dinilai->completion_date = null;
+            $progress->dinilai->isCompleted = false;
         }
 
         if ($completed3) {
@@ -164,6 +170,9 @@ class Document2020Controller extends Controller
                 $progress->selesai->completion_date = $today;
             }
             $progress->selesai->isCompleted = true;
+        } else {
+            $progress->selesai->completion_date = null;
+            $progress->selesai->isCompleted = false;
         }
 
         $data['progress'] = json_encode($progress);
