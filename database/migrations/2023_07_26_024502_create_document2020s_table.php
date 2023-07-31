@@ -34,23 +34,7 @@ return new class extends Migration
             $table->integer('periode_sewa')->nullable();
             // Tambahan
             $table->string('status_masa_aktif')->nullable();
-            $table->json('progress')->default(json_encode([
-                'masuk' => [
-                    'day' => 0,
-                    'isCompleted' => false,
-                    'completion_date' => null,
-                ],
-                'dinilai' => [
-                    'day' => 0,
-                    'isCompleted' => false,
-                    'completion_date' => null,
-                ],
-                'selesai' => [
-                    'day' => 0,
-                    'isCompleted' => false,
-                    'completion_date' => null,
-                ],
-            ]));
+            $table->json('progress');
             $table->integer('total_hari')->virtualAs(
                 "JSON_UNQUOTE(JSON_EXTRACT(progress, '$.masuk.day')) +
                 JSON_UNQUOTE(JSON_EXTRACT(progress, '$.dinilai.day')) +

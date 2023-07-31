@@ -94,8 +94,8 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td class="satker">{{ $document->satker }}</td>
                                     <td>{{ $document->nomor_surat_masuk }}</td>
-                                    <td>{{ $document->surat_masuk_date_formatted }}</td>
-                                    <td>{{ $document->surat_diterima_date_formatted }}</td>
+                                    <td>{{ $document->formatted_tanggal_surat_masuk }}</td>
+                                    <td>{{ $document->formatted_tanggal_surat_diterima }}</td>
                                     <td>{{ $document->jenis_persetujuan }}</td>
                                     <td class="text-center">
                                         <span
@@ -106,17 +106,28 @@
                                     <td>{{ $document->conceptor->name }}</td>
                                     <td>{{ $document->nomor_whatsapp_satker }}</td>
                                     <td>{{ $document->nomor_nd_permohonan_penilaian }}</td>
-                                    <td>{{ $document->tanggal_nd_permohonan_penilaian }}</td>
+                                    <td>{{ $document->formatted_tanggal_nd_permohonan_penilaian_formatted }}</td>
                                     <td>{{ $document->nomor_ndr_penilaian }}</td>
-                                    <td>{{ $document->tanggal_ndr_diterima_penilaian }}</td>
+                                    <td>{{ $document->formatted_tanggal_ndr_diterima_penilaian }}</td>
                                     <td>{{ $document->nomor_surat_persetujuan_penolakan }}</td>
-                                    <td>{{ $document->tanggal_surat_persetujuan_penolakan }}</td>
+                                    <td>{{ $document->formatted_tanggal_surat_persetujuan_penolakan }}</td>
                                     <td>{{ $document->nilai_proporsional_harga_perolehan_nilai_bmn }}</td>
                                     <td>{{ $document->nilai_persetujuan }}</td>
                                     <td>{{ $document->periode_sewa }}</td>
-
                                     <td>{{ $document->total_hari }}</td>
-                                    <td>{{ $document->status_masa_aktif }}</td>
+                                    <td>
+                                        <span
+                                            class="{{ $document->status_masa_aktif === 'Aktif'
+                                                ? 'badge badge-dot bg-success'
+                                                : ($document->status_masa_aktif === 'Tenggang'
+                                                    ? 'badge badge-dot bg-warning'
+                                                    : ($document->status_masa_aktif === 'Non-aktif'
+                                                        ? 'badge badge-dot bg-danger'
+                                                        : '')) }}">
+                                            {{ $document->status_masa_aktif }}
+                                        </span>
+                                    </td>
+
 
                                     <td class="text-nowrap text-center">
                                         <a href="{{ route('document2020.edit', $document->id) }}"
@@ -146,7 +157,8 @@
                     <h5 class="modal-title" id="uploadModalLabel">Upload File Excel</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('document2020.import') }}" class="form-validate is-alter" method="post" enctype="multipart/form-data">
+                <form action="{{ route('document2020.import') }}" class="form-validate is-alter" method="post"
+                    enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
@@ -155,39 +167,39 @@
                             <div id="fileHelp" class="form-text">File Excel harus berformat .xlsx</div>
                         </div>
                         <div ">
-                            <a href="{{ asset('assets/template-file/Template.xlsx') }}" class="btn btn-outline-success btn-dim"><em class="icon ni ni-file-xls me-1"></em> Download Template
-                                Excel</a>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-secondary">Import</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+                                                                <a href="{{ asset('assets/template-file/Template.xlsx') }}" class="btn btn-outline-success btn-dim"><em class="icon ni ni-file-xls me-1"></em> Download Template
+                                                                    Excel</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-secondary">Import</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
 
-    {{-- Delete Modal --}}
-    <div class="modal fade" id="deleteDocument2020Modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Hapus Dokumen 2020</h5>
-                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <em class="icon ni ni-cross"></em>
-                    </a>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="POST" class="form-validate is-alter" id="deleteDocument2020Form">
-                        @csrf
-                        @method('delete')
-                        <div class="mb-3" id="deleteMessage"></div>
-                        <div class="form-group text-end">
-                            <button type="submit" class="btn btn-lg btn-danger">Hapus</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+                                        {{-- Delete Modal --}}
+                                        <div class="modal fade" id="deleteDocument2020Modal">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Hapus Dokumen 2020</h5>
+                                                        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                            <em class="icon ni ni-cross"></em>
+                                                        </a>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="" method="POST" class="form-validate is-alter" id="deleteDocument2020Form">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <div class="mb-3" id="deleteMessage"></div>
+                                                            <div class="form-group text-end">
+                                                                <button type="submit" class="btn btn-lg btn-danger">Hapus</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 @endsection

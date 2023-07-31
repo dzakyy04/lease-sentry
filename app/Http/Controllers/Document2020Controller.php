@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use Carbon\Carbon;
 use App\Models\Conceptor;
 use App\Models\Document2020;
@@ -16,17 +17,52 @@ class Document2020Controller extends Controller
         $title = 'Dokumen 2020';
         $documents = Document2020::with('conceptor')->get();
 
-        $documents = $documents->map(function ($item) {
-            $suratMasukDate = Carbon::createFromFormat('Y-m-d', $item->tanggal_surat_masuk)->locale('id')->isoFormat('D MMMM YYYY');
-            $suratDiterimaDate = Carbon::createFromFormat('Y-m-d', $item->tanggal_surat_diterima)->locale('id')->isoFormat('D MMMM YYYY');
+        $documents = $documents->map(function ($document) {
+            if ($document->jenis_persetujuan == 'Sewa') {
+                $remainingMonths = $this->checkRemainingMonths($document->tanggal_surat_persetujuan_penolakan, $document->periode_sewa);
 
-            $item->surat_masuk_date_formatted = $suratMasukDate;
-            $item->surat_diterima_date_formatted = $suratDiterimaDate;
+                $document->status_masa_aktif = $remainingMonths > 3 ? 'Aktif' : ($remainingMonths > 0 ? 'Tenggang' : 'Non-aktif');
+            } else {
+                $document->status_masa_aktif = '-';
+            }
+            $document->update(['status_masa_aktif' => $document->status_masa_aktif]);
 
-            return $item;
+            $document->formatted_tanggal_surat_masuk = $this->formatDate($document->tanggal_surat_masuk);
+            $document->formatted_tanggal_surat_diterima = $this->formatDate($document->tanggal_surat_diterima);
+            $document->formatted_tanggal_nd_permohonan_penilaian = $this->formatDate($document->tanggal_nd_permohonan_penilaian);
+            $document->formatted_tanggal_ndr_diterima_penilaian = $this->formatDate($document->tanggal_ndr_diterima_penilaian);
+            $document->formatted_tanggal_surat_persetujuan_penolakan = $this->formatDate($document->tanggal_surat_persetujuan_penolakan);
+
+            return $document;
         });
 
         return view('dokumen.dokumen2020.index', compact('title', 'documents'));
+    }
+
+    private function formatDate($date)
+    {
+        if ($date === null) {
+            return null;
+        }
+
+        $carbonDate = Carbon::parse($date);
+        $formattedDate = $carbonDate->locale('id')->isoFormat('D MMM Y');
+
+        return $formattedDate;
+    }
+
+    private function checkRemainingMonths($startDate, $period)
+    {
+        $start = Carbon::parse($startDate);
+        $today = Carbon::now();
+
+        $monthsPassed = $start->diffInMonths($today);
+
+        $totalLeaseMonths = $period * 12;
+
+        $remainingMonths = $totalLeaseMonths - $monthsPassed;
+
+        return $remainingMonths;
     }
 
     public function create()
@@ -52,11 +88,13 @@ class Document2020Controller extends Controller
             'tanggal_nd_permohonan_penilaian' => 'nullable'
         ]);
 
+        $totalDays = Helper::dayDifference($request->tanggal_surat_diterima, now()->toDateString());
+
         if ($request->nomor_nd_permohonan_penilaian && $request->tanggal_nd_permohonan_penilaian) {
             $data['progress'] = json_encode([
-                'masuk' => ['day' => 1, 'isCompleted' => true],
-                'dinilai' => ['day' => 0, 'isCompleted' => false],
-                'selesai' => ['day' => 0, 'isCompleted' => false],
+                'masuk' => ['day' => $totalDays, 'isCompleted' => true, 'completion_date' => null],
+                'dinilai' => ['day' => 0, 'isCompleted' => false, 'completion_date' => null],
+                'selesai' => ['day' => 0, 'isCompleted' => false, 'completion_date' => null],
             ]);
         }
 
@@ -64,6 +102,7 @@ class Document2020Controller extends Controller
 
         return redirect()->route('document2020.index')->with('success', 'Dokumen berhasil ditambahkan');
     }
+
     public function edit($id)
     {
         $title = 'Edit Dokumen 2020';
@@ -103,8 +142,7 @@ class Document2020Controller extends Controller
         $completed1 = $request->nomor_nd_permohonan_penilaian && $request->tanggal_nd_permohonan_penilaian;
         $completed2 = $request->nomor_ndr_penilaian && $request->tanggal_ndr_diterima_penilaian;
         $completed3 = $request->nomor_surat_persetujuan_penolakan &&
-            $request->tanggal_surat_persetujuan_penolakan && $request->nilai_proporsional_harga_perolehan_nilai_bmn &&
-            $request->nilai_persetujuan;
+            $request->tanggal_surat_persetujuan_penolakan && $request->nilai_proporsional_harga_perolehan_nilai_bmn;
 
         if ($completed1) {
             $progress['masuk']['isCompleted'] = true;
