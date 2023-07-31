@@ -4,6 +4,20 @@
     <link rel="stylesheet" href="{{ asset('assets/css/libs/bootstrap-icons.min.css') }}">
 @endpush
 
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $("#submitButton").click(function(event) {
+                event.preventDefault();
+
+                $("#editForm input[disabled]").removeAttr("disabled");
+
+                $("#editForm").submit();
+            });
+        });
+    </script>
+@endpush
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -46,7 +60,7 @@
 
                         {{-- Dokumen selesai --}}
                         <div class="step {{ $progress->selesai->isCompleted ? 'step-completed' : '' }}">
-                            @if ($progress->dinilai->isCompleted)
+                            @if ($progress->selesai->isCompleted)
                                 <span class="step-indicator">
                                     <em class="bi bi-check-lg"></em>
                                 </span>
@@ -74,7 +88,7 @@
             @endif
         @endcanany
 
-        <form method="post" action="{{ route('document2020.update', $document->id) }}">
+        <form method="post" action="{{ route('document2020.update', $document->id) }}" id="editForm">
             @csrf
             {{-- Data surat masuk --}}
             <div class="card card-bordered card-preview">
@@ -418,7 +432,8 @@
             </div>
 
             <div class="text-end mt-4">
-                <button type="submit" class="btn btn-primary"> <em class="ni ni-save me-1"></em> Simpan</button>
+                <button type="submit" class="btn btn-primary" id="submitButton"> <em class="ni ni-save me-1"></em>
+                    Simpan</button>
             </div>
         </form>
     </div>
