@@ -89,7 +89,11 @@ class Document2020Controller extends Controller
         ]);
 
         $totalDays = Helper::dayDifference($request->tanggal_surat_diterima, now()->toDateString());
-
+        if ($request->jenis_persetujuan == 'Sewa') {
+            $totalDays = min($totalDays, 2);
+        } else {
+            $totalDays = min($totalDays, 3);
+        }
         if ($request->nomor_nd_permohonan_penilaian && $request->tanggal_nd_permohonan_penilaian) {
             $data['progress'] = json_encode([
                 'masuk' => ['day' => $totalDays, 'isCompleted' => true, 'completion_date' => now()->toDateString()],
