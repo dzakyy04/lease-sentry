@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('document2020s', function (Blueprint $table) {
+        Schema::create('document2023s', function (Blueprint $table) {
             $table->id();
-            // Progress Masuk
+            // Progress Masuk`
             $table->string('satker')->nullable();
             $table->string('nomor_whatsapp_satker')->nullable();
             $table->string('nomor_surat_masuk')->nullable();
@@ -56,6 +56,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('document2020s');
+        Schema::dropIfExists('document2023s');
     }
 };

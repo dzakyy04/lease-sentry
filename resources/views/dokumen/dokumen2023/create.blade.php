@@ -46,7 +46,7 @@
             <div class="card-inner">
                 <div class="preview-block">
                     <span class="preview-title-lg overline-title">Masukkan Data Surat Masuk</span>
-                    <form method="post" action="{{ route('document2020.store') }}" class="is-alter form-validate form-control-wrap">
+                    <form method="post" action="{{ route('document2023.store') }}" class="is-alter form-validate form-control-wrap">
                         @csrf
                         <div class="row gy-4">
                             <div class="col-sm-6">
@@ -165,7 +165,7 @@
                                         <input type="text" id="nomor_nd_permohonan_penilaian"
                                             class="form-control @error('nomor_nd_permohonan_penilaian') is-invalid @enderror"
                                             name="nomor_nd_permohonan_penilaian"
-                                            placeholder="Contoh: ND-775/KNL.0402/2022"
+                                            placeholder="Contoh: ND-775/KNL.0402/2023"
                                             value="{{ old('nomor_nd_permohonan_penilaian') }}">
                                         @error('nomor_nd_permohonan_penilaian')
                                             <div class="invalid-feedback">{{ $message }}</div>

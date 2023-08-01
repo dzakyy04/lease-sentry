@@ -46,7 +46,7 @@
             <div class="card-inner">
                 <div class="preview-block">
                     <span class="preview-title-lg overline-title">Masukkan Data Surat Masuk</span>
-                    <form method="post" action="{{ route('document2020.store') }}" class="is-alter form-validate form-control-wrap">
+                    <form method="post" action="{{ route('document2022.store') }}" class="is-alter form-validate form-control-wrap">
                         @csrf
                         <div class="row gy-4">
                             <div class="col-sm-6">
