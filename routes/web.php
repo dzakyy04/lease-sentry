@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\ConceptorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Document2020Controller;
-use App\Http\Controllers\HolidayController;
+use App\Http\Controllers\Document2021Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,5 +56,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dokumen/2020/{id}/hapus', [Document2020Controller::class, 'delete'])->name('document2020.delete');
     Route::post('/dokumen/2020/import', [Document2020Controller::class, 'import'])->name('document2020.import');
 
+    //Document2021
+    Route::get('/dokumen/2021', [Document2021Controller::class, 'index'])->name('document2021.index');
+    Route::get('/dokumen/2021/tambah', [Document2021Controller::class, 'create'])->name('document2021.create');
+    Route::post('/dokumen/2021/tambah', [Document2021Controller::class, 'store'])->name('document2021.store');
+    Route::get('/dokumen/2021/{id}/edit', [Document2021Controller::class, 'edit'])->name('document2021.edit');
+    Route::post('/dokumen/2021/{id}/edit', [Document2021Controller::class, 'update'])->name('document2021.update');
+    Route::delete('/dokumen/2021/{id}/hapus', [Document2021Controller::class, 'delete'])->name('document2021.delete');
+    Route::post('/dokumen/2021/import', [Document2021Controller::class, 'import'])->name('document2021.import');
 
 });

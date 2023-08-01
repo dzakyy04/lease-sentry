@@ -39,7 +39,7 @@
                                 </a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="html/project-card.html" class="nk-menu-link">
+                                <a href="{{ route('document2021.index')}}" class="nk-menu-link">
                                     <span class="nk-menu-text">2021</span>
                                 </a>
                             </li>
