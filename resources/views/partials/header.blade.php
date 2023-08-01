@@ -77,6 +77,16 @@
                             <div class="dropdown-inner">
                                 <ul class="link-list">
                                     <li>
+                                        <a href="{{ route('change-password.view') }}">
+                                            <em class="icon ni ni-account-setting"></em>
+                                            <span>Ubah Password</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="dropdown-inner">
+                                <ul class="link-list">
+                                    <li>
                                         <a href="{{ route('logout') }}">
                                             <em class="icon ni ni-signout"></em>
                                             <span>Logout</span>

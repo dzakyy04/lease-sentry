@@ -38,7 +38,9 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-
+    Route::get('/ubah-password', [AuthController::class, 'changePassword'])->name('change-password.view');
+    Route::post('/ubah-password', [AuthController::class, 'updatePassword'])->name('change-password.action');
+    
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
     // Hari Libur
