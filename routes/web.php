@@ -25,6 +25,12 @@ Route::get('/', function () {
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'index']);
     Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+    // Reset password
+    Route::get('/lupa-password', [AuthController::class, 'forgotPasswordView'])->name('forgot-password.view');
+    Route::post('/lupa-password', [AuthController::class, 'forgotPasswordSend'])->name('forgot-password.send');
+    Route::get('reset-password/{token}', [AuthController::class, 'resetPasswordView'])->name('reset-password.view');
+    Route::post('reset-password', [AuthController::class, 'resetPasswordAction'])->name('reset-password.action');
 });
 
 Route::middleware('auth')->group(function () {
@@ -54,6 +60,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/dokumen/2020/{id}/edit', [Document2020Controller::class, 'update'])->name('document2020.update');
     Route::delete('/dokumen/2020/{id}/hapus', [Document2020Controller::class, 'delete'])->name('document2020.delete');
     Route::post('/dokumen/2020/import', [Document2020Controller::class, 'import'])->name('document2020.import');
-
-
 });

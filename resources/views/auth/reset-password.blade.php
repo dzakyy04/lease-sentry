@@ -8,7 +8,7 @@
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}">
     <!-- Page Title  -->
-    <title>Lease Sentry | {{ $title }}</title>
+    <title>Lease Sentry | Reset Password</title>
     <!-- StyleSheets  -->
     <link rel="stylesheet" href="{{ asset('assets/css/dashlite.css?ver=3.0.3') }}">
     <link id="skin-default" rel="stylesheet" href="{{ asset('assets/css/theme.css?ver=3.0.3') }} ">
@@ -32,28 +32,33 @@
                             <div class="card-inner card-inner-lg">
                                 <div class="nk-block-head">
                                     <div class="nk-block-head-content">
-                                        <h4 class="nk-block-title">Login</h4>
+                                        <h4 class="nk-block-title">Reset Password</h4>
                                         <div class="nk-block-des">
-                                            <p>Silahkan masukkan email dan password anda.</p>
+                                            <p>Silahkan atur ulang password anda.</p>
                                         </div>
                                     </div>
                                 </div>
-                                <form action="{{ route('login') }}" method="POST">
+                                <form action="{{ route('reset-password.action') }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="token" value="{{ $token }}">
                                     <div class="form-group">
                                         <div class="form-label-group">
                                             <label class="form-label" for="email">Email</label>
                                         </div>
                                         <div class="form-control-wrap">
-                                            <input type="text" class="form-control form-control-lg" id="email"
-                                                name="email" placeholder="Masukkan email anda">
+                                            <input type="text"
+                                                class="form-control form-control-lg @error('email')
+                                                is-invalid
+                                            @enderror"
+                                                id="email" name="email" value="{{ old('email') }}" placeholder="Masukkan email anda">
+                                            @error('email')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="form-label-group">
-                                            <label class="form-label" for="password">Password</label>
-                                            <a class="link link-primary link-sm"
-                                                href="{{ route('forgot-password.view') }}">Lupa password?</a>
+                                            <label class="form-label" for="password">Password baru</label>
                                         </div>
                                         <div class="form-control-wrap">
                                             <a href="#" class="form-icon form-icon-right passcode-switch lg"
@@ -61,19 +66,42 @@
                                                 <em class="passcode-icon icon-show icon ni ni-eye"></em>
                                                 <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
                                             </a>
-                                            <input type="password" class="form-control form-control-lg" id="password"
-                                                name="password" placeholder="Masukkan password anda">
+                                            <input type="password"
+                                                class="form-control form-control-lg @error('password')
+                                                error
+                                            @enderror"
+                                                id="password" name="password"
+                                                placeholder="Masukkan password baru anda">
+                                            @error('password')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="custom-control custom-control-sm custom-checkbox checked">
-                                            <input type="checkbox" class="custom-control-input" id="remember"
-                                                name="remember">
-                                            <label class="custom-control-label" for="remember">Ingat saya</label>
+                                        <div class="form-label-group">
+                                            <label class="form-label" for="password_confirmation">Konfirmasi
+                                                Password</label>
+                                        </div>
+                                        <div class="form-control-wrap">
+                                            <a href="#" class="form-icon form-icon-right passcode-switch lg"
+                                                data-target="password_confirmation">
+                                                <em class="passcode-icon icon-show icon ni ni-eye"></em>
+                                                <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                                            </a>
+                                            <input type="password"
+                                                class="form-control form-control-lg @error('password_confirmation')
+                                                error
+                                            @enderror"
+                                                id="password_confirmation" name="password_confirmation"
+                                                placeholder="Masukkan konfirmasi password">
+                                            @error('password_confirmation')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
+                                        <button type="submit" class="btn btn-lg btn-primary btn-block">Reset
+                                            Password</button>
                                     </div>
                                 </form>
                             </div>
@@ -86,14 +114,6 @@
     <script src="{{ asset('assets/js/bundle.js?ver=3.0.3') }}"></script>
     <script src="{{ asset('assets/js/scripts.js?ver=3.0.3') }}"></script>
     <script src="{{ asset('assets/js/example-toastr.js?ver=3.0.3') }}"></script>
-    @if (session()->has('success'))
-        <script>
-            let message = @json(session('success'));
-            NioApp.Toast(`<h5>Berhasil</h5><p>${message}</p>`, 'success', {
-                position: 'top-right',
-            });
-        </script>
-    @endif
     @if (session()->has('error'))
         <script>
             let message = @json(session('error'));
