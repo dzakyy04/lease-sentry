@@ -30,6 +30,14 @@
             deleteForm.attr('action', '{{ route('document2021.delete', ':id') }}'.replace(':id', id));
         });
     </script>
+        <script>
+            $(document).ready(function() {
+                $('tbody tr').on('dblclick', function() {
+                    const id = $(this).data('id');
+                    window.location.href = '{{ route('document2021.edit', ':id') }}'.replace(':id', id);
+                });
+            });
+        </script>
 @endpush
 
 @section('content')
@@ -104,7 +112,7 @@
                         </thead>
                         <tbody>
                             @foreach ($documents as $index => $document)
-                                <tr class="text-center align-middle">
+                                <tr class="text-center align-middle" data-id="{{ $document->id }}">
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $document->satker }}</td>
                                     <td>{{ $document->nomor_surat_masuk }}</td>

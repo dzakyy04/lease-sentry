@@ -7,6 +7,7 @@ use App\Http\Controllers\ConceptorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Document2020Controller;
 use App\Http\Controllers\Document2021Controller;
+use App\Http\Controllers\Document2022Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/konseptor/{id}/edit', [ConceptorController::class, 'update'])->name('conceptor.update');
     Route::delete('/konseptor/{id}/hapus', [ConceptorController::class, 'delete'])->name('conceptor.delete');
 
-    //Document2020
+    // Document2020
     Route::get('/dokumen/2020', [Document2020Controller::class, 'index'])->name('document2020.index');
     Route::get('/dokumen/2020/tambah', [Document2020Controller::class, 'create'])->name('document2020.create');
     Route::post('/dokumen/2020/tambah', [Document2020Controller::class, 'store'])->name('document2020.store');
@@ -56,7 +57,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dokumen/2020/{id}/hapus', [Document2020Controller::class, 'delete'])->name('document2020.delete');
     Route::post('/dokumen/2020/import', [Document2020Controller::class, 'import'])->name('document2020.import');
 
-    //Document2021
+    // Document2021
     Route::get('/dokumen/2021', [Document2021Controller::class, 'index'])->name('document2021.index');
     Route::get('/dokumen/2021/tambah', [Document2021Controller::class, 'create'])->name('document2021.create');
     Route::post('/dokumen/2021/tambah', [Document2021Controller::class, 'store'])->name('document2021.store');
@@ -65,4 +66,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dokumen/2021/{id}/hapus', [Document2021Controller::class, 'delete'])->name('document2021.delete');
     Route::post('/dokumen/2021/import', [Document2021Controller::class, 'import'])->name('document2021.import');
 
+    // Document2021
+    Route::get('/dokumen/2022', [Document2022Controller::class, 'index'])->name('document2022.index');
+    Route::get('/dokumen/2022/tambah', [Document2022Controller::class, 'create'])->name('document2022.create');
+    Route::post('/dokumen/2022/tambah', [Document2022Controller::class, 'store'])->name('document2022.store');
+    Route::get('/dokumen/2022/{id}/edit', [Document2022Controller::class, 'edit'])->name('document2022.edit');
+    Route::post('/dokumen/2022/{id}/edit', [Document2022Controller::class, 'update'])->name('document2022.update');
+    Route::delete('/dokumen/2022/{id}/hapus', [Document2022Controller::class, 'delete'])->name('document2022.delete');
+    Route::post('/dokumen/2022/import', [Document2022Controller::class, 'import'])->name('document2022.import');
 });
