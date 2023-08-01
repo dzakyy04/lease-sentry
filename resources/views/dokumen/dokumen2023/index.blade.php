@@ -185,7 +185,7 @@
                             <div id="fileHelp" class="form-text">File Excel harus berformat .xlsx</div>
                         </div>
                         <div>
-                            <a href="{{ asset('assets/template-file/Template.xlsx') }}"
+                            <a href="{{ asset('assets/template-file/Template-Import.xlsx') }}"
                                 class="btn btn-outline-success btn-dim"><em class="icon ni ni-file-xls me-1"></em>
                                 Download Template
                                 Excel</a>
