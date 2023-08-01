@@ -52,7 +52,8 @@
                                     <div class="form-group">
                                         <div class="form-label-group">
                                             <label class="form-label" for="password">Password</label>
-                                            <a class="link link-primary link-sm" href="">Lupa password?</a>
+                                            <a class="link link-primary link-sm"
+                                                href="{{ route('forgot-password.index') }}">Lupa password?</a>
                                         </div>
                                         <div class="form-control-wrap">
                                             <a href="#" class="form-icon form-icon-right passcode-switch lg"
@@ -84,5 +85,14 @@
     </div>
     <script src="{{ asset('assets/js/bundle.js?ver=3.0.3') }}"></script>
     <script src="{{ asset('assets/js/scripts.js?ver=3.0.3') }}"></script>
+    <script src="{{ asset('assets/js/example-toastr.js?ver=3.0.3') }}"></script>
+    @if (session()->has('error'))
+        <script>
+            let message = @json(session('error'));
+            NioApp.Toast(`<h5>Error</h5><p>${message}</p>`, 'error', {
+                position: 'top-right',
+            });
+        </script>
+    @endif
 
 </html>

@@ -38,4 +38,9 @@ class AuthController extends Controller
 
         return redirect()->route('login');
     }
+
+    public function forgotPassword() {
+        $title = 'Lupa Password';
+        return view('auth.forgot-password', compact('title'));
+    }
 }
