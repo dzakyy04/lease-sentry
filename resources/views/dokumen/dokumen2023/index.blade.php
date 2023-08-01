@@ -18,16 +18,16 @@
             datatableWrap.children().appendTo(wrappingDiv);
             datatableWrap.append(wrappingDiv);
         });
-        $(document).on('show.bs.modal', '#deleteDocument2021Modal', function(event) {
+        $(document).on('show.bs.modal', '#deleteDocument2023Modal', function(event) {
             const button = $(event.relatedTarget);
             const id = button.data('id');
             const satker = button.data('satker');
             const modal = $(this);
-            const deleteForm = $('#deleteDocument2021Form');
+            const deleteForm = $('#deleteDocument2023Form');
             const deleteMessage = $('#deleteMessage');
 
             deleteMessage.html(`Apakah anda yakin ingin menghapus dokumen <strong>${satker}</strong>`);
-            deleteForm.attr('action', '{{ route('document2021.delete', ':id') }}'.replace(':id', id));
+            deleteForm.attr('action', '{{ route('document2023.delete', ':id') }}'.replace(':id', id));
         });
     </script>
 @endpush
@@ -37,14 +37,14 @@
         <div class="nk-block nk-block-lg">
             <div class="nk-block-head">
                 <div class="nk-block-head-content">
-                    <h4 class="nk-block-title">Dokumen 2021</h4>
+                    <h4 class="nk-block-title">Dokumen 2023</h4>
                 </div>
             </div>
             <div class="card card-bordered card-preview">
                 <div class="card-inner">
                     @can(['admin-pkn-super-admin'])
                         <div class="d-flex">
-                            <a href="{{ route('document2021.create') }}" class="btn btn-primary mb-2 me-2">
+                            <a href="{{ route('document2023.create') }}" class="btn btn-primary mb-2 me-2">
                                 <em class="icon ni ni-plus me-1"></em> Tambah Dokumen</span>
                             </a>
                             <button type="button" class="btn btn-secondary mb-2" data-bs-toggle="modal"
@@ -148,12 +148,12 @@
                                         </span>
                                     </td>
                                     <td class="text-nowrap">
-                                        <a href="{{ route('document2021.edit', $document->id) }}"
+                                        <a href="{{ route('document2023.edit', $document->id) }}"
                                             class="btn btn-warning btn-xs rounded-pill">
                                             <em class="ni ni-edit"></em>
                                         </a>
                                         <button class="btn btn-danger btn-xs rounded-pill" data-bs-toggle="modal"
-                                            data-bs-target="#deleteDocument2021Modal" data-id="{{ $document->id }}"
+                                            data-bs-target="#deleteDocument2023Modal" data-id="{{ $document->id }}"
                                             data-satker="{{ $document->satker }}">
                                             <em class="ni ni-trash"></em>
                                         </button>
@@ -175,7 +175,7 @@
                     <h5 class="modal-title" id="uploadModalLabel">Upload File Excel</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('document2021.import') }}" class="form-validate is-alter" method="post"
+                <form action="{{ route('document2023.import') }}" class="form-validate is-alter" method="post"
                     enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
@@ -200,17 +200,17 @@
     </div>
 
     {{-- Delete Modal --}}
-    <div class="modal fade" id="deleteDocument2021Modal">
+    <div class="modal fade" id="deleteDocument2023Modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Hapus Dokumen 2021</h5>
+                    <h5 class="modal-title">Hapus Dokumen 2023</h5>
                     <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <em class="icon ni ni-cross"></em>
                     </a>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST" class="form-validate is-alter" id="deleteDocument2021Form">
+                    <form action="" method="POST" class="form-validate is-alter" id="deleteDocument2023Form">
                         @csrf
                         @method('delete')
                         <div class="mb-3" id="deleteMessage"></div>

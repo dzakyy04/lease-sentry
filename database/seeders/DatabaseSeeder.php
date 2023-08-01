@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             Document2020Seeder::class,
             Document2021Seeder::class,
             Document2022Seeder::class,
+            Document2023Seeder::class,
         ]);
     }
 }
