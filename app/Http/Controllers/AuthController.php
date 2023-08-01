@@ -45,6 +45,44 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
+    public function changePassword()
+    {
+        $title = 'Ubah Password';
+        return view('pengaturan.ubah-password', compact('title'));
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required',
+        ], [
+            'current_password.required' => 'Kolom password saat ini harus diisi.',
+            'password.required' => 'Kolom password wajib diisi.',
+            'password.string' => 'Kolom password harus berupa string.',
+            'password.min' => 'Kolom password harus memiliki setidaknya 6 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
+            'password_confirmation.required' => 'Kolom konfirmasi password wajib diisi.',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->with('error', 'Password saat ini salah!');
+        }
+
+        if (Hash::check($request->password, $user->password)) {
+            return back()->with('error', 'Password baru harus berbeda dengan password saat ini!');
+        }
+
+        User::where('id', $user->id)->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        return back()->with('success', 'Password berhasil diubah.');
+    }
+
     public function forgotPasswordView()
     {
         $title = 'Lupa Password';
@@ -96,7 +134,7 @@ class AuthController extends Controller
             'password.required' => 'Kolom password wajib diisi.',
             'password.string' => 'Kolom password harus berupa string.',
             'password.min' => 'Kolom password harus memiliki setidaknya 6 karakter.',
-            'password.confirmed' => 'Password konfirmasi tidak cocok.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
             'password_confirmation.required' => 'Kolom konfirmasi password wajib diisi.',
         ]);
 
@@ -107,17 +145,17 @@ class AuthController extends Controller
         ])->first();
 
         if (!$updatePassword || Carbon::now()->gt($updatePassword->expires_at)) {
-            return back()->withInput()->with('error', 'Token kadaluarsa atau tidak valid!');
+            return back()->with('error', 'Token kadaluarsa atau tidak valid!');
         }
 
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-            return back()->withInput()->with('error', 'User tidak ditemukan!');
+            return back()->with('error', 'User tidak ditemukan!');
         }
 
         if (Hash::check($request->password, $user->password)) {
-            return back()->withInput()->with('error', 'Password baru harus berbeda dengan password lama!');
+            return back()->with('error', 'Password baru harus berbeda dengan password lama!');
         }
 
         $user->update(['password' => Hash::make($request->password)]);
