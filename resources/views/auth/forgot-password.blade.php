@@ -24,7 +24,7 @@
                 <div class="nk-content ">
                     <div class="nk-block nk-block-middle nk-auth-body  wide-xs">
                         <div class="brand-logo pb-4 text-center">
-                            <a href="html/index.html" class="logo-link">
+                            <a href="#" class="logo-link">
                                 <img class="logo-light logo-img logo-img-lg"
                                     src="{{ asset('assets/images/logo-kpknl.png') }}" alt="logo">
                                 <img class="logo-dark logo-img logo-img-lg"
@@ -53,12 +53,14 @@
                                                 class="form-control form-control-lg @error('email')
                                                 is-invalid
                                             @enderror"
-                                                id="email" name="email"
+                                                id="email" name="email" value="{{ old('email') }}"
                                                 placeholder="Contoh: myemail123@gmail.com">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-lg btn-primary btn-block">Kirim Link ke Email</button>
+                                        <button type="submit" class="btn btn-lg btn-primary btn-block" id="btnSubmit">
+                                            <span>Kirim Link Ke Email</span>
+                                        </button>
                                     </div>
                                 </form>
                                 <div class="form-note-s2 text-center pt-4">
@@ -73,6 +75,25 @@
     </div>
     <script src="{{ asset('assets/js/bundle.js?ver=3.0.3') }}"></script>
     <script src="{{ asset('assets/js/scripts.js?ver=3.0.3') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#btnSubmit").on("click", function() {
+                var $btn = $(this);
+                var $form = $btn.closest("form");
+                if ($form[0].checkValidity()) {
+                    $btn.addClass("disabled");
+
+                    var spinner = $("<span/>", {
+                        "class": "spinner-border spinner-border-sm",
+                        "role": "status",
+                        "aria-hidden": "true"
+                    });
+
+                    $btn.prepend(spinner);
+                }
+            });
+        });
+    </script>
     <script src="{{ asset('assets/js/example-toastr.js?ver=3.0.3') }}"></script>
     @error('email')
         <script>

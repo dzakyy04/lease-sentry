@@ -73,7 +73,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
+                                        <button type="submit" class="btn btn-lg btn-primary btn-block" id="btnSubmit">
+                                            <span>Login</span>
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -86,6 +88,25 @@
     <script src="{{ asset('assets/js/bundle.js?ver=3.0.3') }}"></script>
     <script src="{{ asset('assets/js/scripts.js?ver=3.0.3') }}"></script>
     <script src="{{ asset('assets/js/example-toastr.js?ver=3.0.3') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#btnSubmit").on("click", function() {
+                var $btn = $(this);
+                var $form = $btn.closest("form");
+                if ($form[0].checkValidity()) {
+                    $btn.addClass("disabled");
+
+                    var spinner = $("<span/>", {
+                        "class": "spinner-border spinner-border-sm",
+                        "role": "status",
+                        "aria-hidden": "true"
+                    });
+
+                    $btn.prepend(spinner);
+                }
+            });
+        });
+    </script>
     @if (session()->has('success'))
         <script>
             let message = @json(session('success'));
