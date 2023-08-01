@@ -37,24 +37,28 @@
                                     <div class="nk-block-head-content">
                                         <h5 class="nk-block-title">Reset password</h5>
                                         <div class="nk-block-des">
-                                            <p>
-                                                Jika anda lupa password, kami akan mengirimkan email petunjuk
-                                                untuk mengatur ulang password anda.</p>
+                                            <p>Jika anda lupa password, kami akan mengirimkan link untuk mengatur ulang
+                                                password ke email anda.</p>
                                         </div>
                                     </div>
                                 </div>
-                                <form action="html/pages/auths/auth-success-v2.html">
+                                <form action="{{ route('forgot-password.send') }}" method="POST">
+                                    @csrf
                                     <div class="form-group">
                                         <div class="form-label-group">
                                             <label class="form-label" for="email">Email</label>
                                         </div>
                                         <div class="form-control-wrap">
-                                            <input type="email" class="form-control form-control-lg" id="email" name="email"
-                                                placeholder="Contoh: myemail@gmail.com">
+                                            <input type="email"
+                                                class="form-control form-control-lg @error('email')
+                                                is-invalid
+                                            @enderror"
+                                                id="email" name="email"
+                                                placeholder="Contoh: myemail123@gmail.com">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-lg btn-primary btn-block">Kirim Link Reset</button>
+                                        <button class="btn btn-lg btn-primary btn-block">Kirim Link ke Email</button>
                                     </div>
                                 </form>
                                 <div class="form-note-s2 text-center pt-4">
@@ -69,5 +73,22 @@
     </div>
     <script src="{{ asset('assets/js/bundle.js?ver=3.0.3') }}"></script>
     <script src="{{ asset('assets/js/scripts.js?ver=3.0.3') }}"></script>
+    <script src="{{ asset('assets/js/example-toastr.js?ver=3.0.3') }}"></script>
+    @error('email')
+        <script>
+            let message = "{{ $message }}"
+            NioApp.Toast(`<h5>Error</h5><p>${message}</p>`, 'error', {
+                position: 'top-right',
+            });
+        </script>
+    @enderror
+    @if (session()->has('success'))
+        <script>
+            let message = @json(session('success'));
+            NioApp.Toast(`<h5>Berhasil</h5><p>${message}</p>`, 'success', {
+                position: 'top-right',
+            });
+        </script>
+    @endif
 
 </html>

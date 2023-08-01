@@ -25,7 +25,12 @@ Route::get('/', function () {
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'index']);
     Route::post('/login', [AuthController::class, 'login'])->name('login');
-    Route::get('/lupa-password', [AuthController::class, 'forgotPassword'])->name('forgot-password.index');
+
+    // Reset password
+    Route::get('/lupa-password', [AuthController::class, 'forgotPasswordView'])->name('forgot-password.view');
+    Route::post('/lupa-password', [AuthController::class, 'forgotPasswordSend'])->name('forgot-password.send');
+    Route::get('reset-password/{token}', [AuthController::class, 'resetPasswordView'])->name('reset-password.view');
+    Route::post('reset-password', [AuthController::class, 'resetPasswordAction'])->name('reset-password.action');
 });
 
 Route::middleware('auth')->group(function () {
