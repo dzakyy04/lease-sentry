@@ -46,7 +46,7 @@
             <div class="card-inner">
                 <div class="preview-block">
                     <span class="preview-title-lg overline-title">Masukkan Data Surat Masuk</span>
-                    <form method="post" action="{{ route('document2020.store') }}">
+                    <form method="post" action="{{ route('document2020.store') }}" class="is-alter form-validate form-control-wrap">
                         @csrf
                         <div class="row gy-4">
                             <div class="col-sm-6">
@@ -55,7 +55,7 @@
                                     <div class="form-control-wrap">
                                         <input type="text" id="satker"
                                             class="form-control @error('satker') is-invalid @enderror" name="satker"
-                                            placeholder="Contoh: Universitas Sriwijaya" value="{{ old('satker') }}">
+                                            placeholder="Contoh: Universitas Sriwijaya" value="{{ old('satker') }}" required>
                                         @error('satker')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -72,7 +72,7 @@
                                         <input type="text" id="nomor_whatsapp_satker"
                                             class="form-control @error('nomor_whatsapp_satker') is-invalid @enderror"
                                             name="nomor_whatsapp_satker" placeholder="Contoh: 081368687789"
-                                            value="{{ old('nomor_whatsapp_satker') }}">
+                                            value="{{ old('nomor_whatsapp_satker') }}" required>
                                         @error('nomor_whatsapp_satker')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -86,7 +86,7 @@
                                         <input type="text" id="nomor_surat_masuk"
                                             class="form-control @error('nomor_surat_masuk') is-invalid @enderror"
                                             name="nomor_surat_masuk" placeholder="Contoh: B/735-11/02/01/Smh"
-                                            value="{{ old('nomor_surat_masuk') }}">
+                                            value="{{ old('nomor_surat_masuk') }}" required>
                                         @error('nomor_surat_masuk')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -99,7 +99,7 @@
                                     <div class="form-control-wrap">
                                         <input type="date" id="tanggal_surat_masuk"
                                             class="form-control @error('tanggal_surat_masuk') is-invalid @enderror"
-                                            name="tanggal_surat_masuk" value="{{ old('tanggal_surat_masuk') }}">
+                                            name="tanggal_surat_masuk" value="{{ old('tanggal_surat_masuk') }}" required>
                                         @error('tanggal_surat_masuk')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -112,7 +112,7 @@
                                     <div class="form-control-wrap">
                                         <input type="date" id="tanggal_surat_diterima"
                                             class="form-control @error('tanggal_surat_diterima') is-invalid @enderror"
-                                            name="tanggal_surat_diterima" value="{{ old('tanggal_surat_diterima') }}">
+                                            name="tanggal_surat_diterima" value="{{ old('tanggal_surat_diterima') }}" required>
                                         @error('tanggal_surat_diterima')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -125,7 +125,7 @@
                                     <div class="form-control-wrap">
                                         <select id="jenis_persetujuan"
                                             class="form-select js-select2 @error('jenis_persetujuan') is-invalid @enderror"
-                                            name="jenis_persetujuan" id="floatingSelect" aria-label="State">
+                                            name="jenis_persetujuan" id="floatingSelect" aria-label="State" required>
                                             <option selected disabled>Pilih Jenis Persetujuan</option>
                                             <option value="Sewa">Sewa</option>
                                             <option value="Penjualan">Penjualan</option>
@@ -144,7 +144,7 @@
                                         <select id="conceptor"
                                             class="form-select js-select2 @error('conceptor_id') is-invalid @enderror"
                                             name="conceptor_id" id="floatingSelect" aria-label="State"
-                                            value="{{ old('conceptor_id') }}">
+                                            value="{{ old('conceptor_id') }}" required>
                                             <option selected disabled>Pilih Konseptor</option>
                                             @foreach ($conceptors as $conceptor)
                                                 <option value="{{ $conceptor->id }}">{{ $conceptor->name }}</option>

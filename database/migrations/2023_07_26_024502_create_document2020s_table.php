@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('document2020s', function (Blueprint $table) {
             $table->id();
             // Progress Masuk
-            $table->string('satker');
-            $table->string('nomor_whatsapp_satker');
-            $table->string('nomor_surat_masuk');
-            $table->date('tanggal_surat_masuk');
-            $table->date('tanggal_surat_diterima');
-            $table->string('jenis_persetujuan');
+            $table->string('satker')->nullable();
+            $table->string('nomor_whatsapp_satker')->nullable();
+            $table->string('nomor_surat_masuk')->nullable();
+            $table->date('tanggal_surat_masuk')->nullable();
+            $table->date('tanggal_surat_diterima')->nullable();
+            $table->string('jenis_persetujuan')->nullable();
             $table->foreignId('conceptor_id')->nullable()->constrained()->onDelete('set null');
             $table->string('nomor_nd_permohonan_penilaian')->nullable();
             $table->date('tanggal_nd_permohonan_penilaian')->nullable();
