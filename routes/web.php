@@ -114,9 +114,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dokumen/2022/{id}/hapus', [Document2022Controller::class, 'delete'])->name('document2022.delete');
     Route::post('/dokumen/2022/import', [Document2022Controller::class, 'import'])->name('document2022.import');
 
-    // Document2021
-    Route::get('/dokumen/2023', [Document2023Controller::class, 'index'])->name('document2023.index');
-    Route::get('/dokumen/2023/tambah', [Document2023Controller::class, 'create'])->name('document2023.create');
+    // Document2023
+    // Sewa
+    Route::get('/dokumen/sewa/2023', [Document2023Controller::class, 'sewaIndex'])->name('document2023.sewa.index');
+    Route::get('/dokumen/sewa/2023/tambah', [Document2023Controller::class, 'create'])->name('document2023.sewa.create');
+
+    // Penjualan
+    Route::get('/dokumen/penjualan/2023', [Document2023Controller::class, 'penjualanIndex'])->name('document2023.penjualan.index');
+    Route::get('/dokumen/penjualan/2023/tambah', [Document2023Controller::class, 'create'])->name('document2023.penjualan.create');
+
+    // Penghapusan
+    Route::get('/dokumen/penghapusan/2023', [Document2023Controller::class, 'penghapusanIndex'])->name('document2023.penghapusan.index');
+    Route::get('/dokumen/penghapusan/2023/tambah', [Document2023Controller::class, 'create'])->name('document2023.penghapusan.create');
+
     Route::post('/dokumen/2023/tambah', [Document2023Controller::class, 'store'])->name('document2023.store');
     Route::get('/dokumen/2023/{id}/edit', [Document2023Controller::class, 'edit'])->name('document2023.edit');
     Route::post('/dokumen/2023/{id}/edit', [Document2023Controller::class, 'update'])->name('document2023.update');
