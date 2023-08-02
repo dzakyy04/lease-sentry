@@ -12,7 +12,7 @@ class Document2023 extends Model
     protected $guarded = ['id'];
 
     protected $attributes = [
-        'progress' => '{"masuk":{"day":0,"isCompleted":false,"completion_date":null},"dinilai":{"day":0,"isCompleted":false,"completion_date":null},"selesai":{"day":0,"isCompleted":false,"completion_date":null}}'
+        'progress' => '{"masuk":{"day":0,"isCompleted":false},"dinilai":{"day":0,"isCompleted":false},"selesai":{"day":0,"isCompleted":false}}'
     ];
 
     public function user_pkn()
