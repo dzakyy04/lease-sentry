@@ -4,6 +4,9 @@ namespace App\Console\Commands;
 
 use App\Helpers\Helper;
 use App\Models\Document2020;
+use App\Models\Document2021;
+use App\Models\Document2022;
+use App\Models\Document2023;
 use Illuminate\Console\Command;
 
 class WhatsappCompleteProgress extends Command
@@ -37,8 +40,23 @@ class WhatsappCompleteProgress extends Command
             ->whereJsonContains('progress->dinilai', ['isCompleted' => true])
             ->whereJsonContains('progress->selesai', ['isCompleted' => false])
             ->get();
+        $document2021 = Document2021::with('conceptor')
+            ->whereJsonContains('progress->masuk', ['isCompleted' => true])
+            ->whereJsonContains('progress->dinilai', ['isCompleted' => true])
+            ->whereJsonContains('progress->selesai', ['isCompleted' => false])
+            ->get();
+        $document2022 = Document2022::with('conceptor')
+            ->whereJsonContains('progress->masuk', ['isCompleted' => true])
+            ->whereJsonContains('progress->dinilai', ['isCompleted' => true])
+            ->whereJsonContains('progress->selesai', ['isCompleted' => false])
+            ->get();
+        $document2023 = Document2023::with('conceptor')
+            ->whereJsonContains('progress->masuk', ['isCompleted' => true])
+            ->whereJsonContains('progress->dinilai', ['isCompleted' => true])
+            ->whereJsonContains('progress->selesai', ['isCompleted' => false])
+            ->get();
 
-        $documents = $document2020;
+        $documents = $document2020->concat($document2021)->concat($document2022)->concat($document2023);
 
         foreach ($documents as  $document) {
             $progress = json_decode($document->progress);
