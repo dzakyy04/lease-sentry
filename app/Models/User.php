@@ -48,4 +48,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Document2021::class);
     }
+
+    public function document2022s()
+    {
+        return $this->hasMany(Document2022::class);
+    }
+
+    public function document2023s()
+    {
+        return $this->hasMany(Document2023::class);
+    }
 }
