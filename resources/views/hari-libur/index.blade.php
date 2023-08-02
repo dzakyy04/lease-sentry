@@ -176,7 +176,7 @@
                         @csrf
                         @method('delete')
                         <div id="deleteMessage"></div>
-                        <div class="form-group text-end">
+                        <div class="form-group text-end mt-3">
                             <button type="submit" class="btn btn-lg btn-danger">Hapus</button>
                         </div>
                     </form>

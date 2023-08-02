@@ -5,64 +5,52 @@
     <script src="{{ asset('assets/js/example-toastr.js?ver=3.0.3') }}"></script>
 
     <script>
-        const conceptorForm = $('#conceptorForm');
-        const conceptorModal = $('#conceptorModal');
-        const nameInput = conceptorModal.find('#name');
-        const whatsappNumberInput = conceptorModal.find('#whatsapp_number');
-        const modalTitle = conceptorModal.find('#modalTitle');
-
-        const deleteConceptorForm = $('#deleteConceptorForm');
-        const deleteConceptorModal = $('#deleteConceptorModal');
-        const deleteMessage = deleteConceptorModal.find('#deleteMessage');
-
-        async function fetchData(id) {
-            try {
-                const response = await fetch('{{ route('conceptor.get', ':id') }}'.replace(':id', id));
-                if (!response.ok) {
-                    throw new Error('Data tidak ditemukan');
-                }
-                const data = await response.json();
-                nameInput.val(data.name);
-                whatsappNumberInput.val(data.whatsapp_number);
-                deleteMessage.html(
-                    `Apakah anda yakin ingin menghapus <strong>${data.name} (${data.whatsapp_number})</strong> sebagai konseptor?`
-                )
-            } catch (error) {
-                alert(error.message);
-            }
-        }
-
-        function clearModalForm() {
-            nameInput.val('');
-            whatsappNumberInput.val('');
-        }
-
         $(document).ready(function() {
-            // Add and Edit Modal
-            $(document).on('show.bs.modal', '#conceptorModal', function(event) {
+            $(document).on('show.bs.modal', '#editConceptorModal', async function(event) {
                 const button = $(event.relatedTarget);
                 const id = button.data('id');
-                const modalTitleText = button.data('modal-title');
+                const modal = $(this);
+                const form = modal.find('#editForm');
 
-                modalTitle.text(modalTitleText);
+                $.ajax({
+                    url: '{{ route('conceptor.get', ':id') }}'.replace(':id', id),
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        form.find('#name').val(data.name);
+                        form.find('#email').val(data.email);
+                        form.find('#whatsapp_number').val(data.whatsapp_number);
+                        form.find('#role option').prop('selected', false);
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Data tidak ditemukan');
+                    }
+                });
 
-                if (id) {
-                    fetchData(id);
-                    conceptorForm.attr('action', '{{ route('conceptor.update', ':id') }}'.replace(':id',
-                        id));
-                } else {
-                    clearModalForm();
-                    conceptorForm.attr('action', '{{ route('conceptor.store') }}');
-                }
+                form.attr('action', '{{ route('conceptor.update', ':id') }}'.replace(':id', id));
             });
 
-            $(document).on('show.bs.modal', '#deleteConceptorModal', function(event) {
+            $(document).on('show.bs.modal', '#deleteConceptorModal', async function(event) {
                 const button = $(event.relatedTarget);
                 const id = button.data('id');
+                const modal = $(this);
+                const form = modal.find('#deleteForm');
 
-                fetchData(id);
-                deleteConceptorForm.attr('action', '{{ route('conceptor.delete', ':id') }}'.replace(':id',
-                    id));
+                $.ajax({
+                    url: '{{ route('conceptor.get', ':id') }}'.replace(':id', id),
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        form.find('#deleteMessage').html(
+                            `Apakah anda yakin ingin menghapus <strong>${data.name}</strong> sebagai <strong>${data.role}</strong>?`
+                            );
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Data tidak ditemukan');
+                    }
+                });
+
+                form.attr('action', '{{ route('conceptor.delete', ':id') }}'.replace(':id', id));
             });
         });
     </script>
@@ -81,13 +69,15 @@
         <div class="nk-block nk-block-lg">
             <div class="nk-block-head">
                 <div class="nk-block-head-content">
-                    <h4 class="nk-block-title">Konseptor</h4>
+                    <h4 class="nk-block-title">Konseptor
+                        {{ Auth::user()->role == 'Admin Pkn' ? 'Pkn' : (Auth::user()->role == 'Admin Penilai' ? 'Penilai' : '') }}
+                    </h4>
                 </div>
             </div>
             <div class="card card-bordered card-preview">
                 <div class="card-inner">
-                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#conceptorModal"
-                        data-modal-title="Tambah Konseptor">
+                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                        data-bs-target="#addConceptorModal" data-modal-title="Tambah Konseptor">
                         <span class="ni ni-plus"></span>
                         <span class="ms-1">Tambah Konseptor</span>
                     </button>
@@ -97,7 +87,9 @@
                             <tr class="table-light">
                                 <th class="text-center">No</th>
                                 <th class="text-center">Nama</th>
+                                <th class="text-center">Email</th>
                                 <th class="text-center">Nomor Whatsapp</th>
+                                <th class="text-center">Peran</th>
                                 <th class="text-center no-export">Aksi</th>
                             </tr>
                         </thead>
@@ -106,10 +98,12 @@
                                 <tr>
                                     <td class="text-center">{{ $index + 1 }}</td>
                                     <td>{{ $conceptor->name }}</td>
+                                    <td>{{ $conceptor->email }}</td>
                                     <td>{{ $conceptor->whatsapp_number }}</td>
+                                    <td>{{ $conceptor->role }}</td>
                                     <td class="text-center">
                                         <button class="btn btn-warning btn-xs rounded-pill" data-bs-toggle="modal"
-                                            data-bs-target="#conceptorModal" data-modal-title="Edit Konseptor"
+                                            data-bs-target="#editConceptorModal" data-modal-title="Edit Konseptor"
                                             data-id="{{ $conceptor->id }}">
                                             <em class="ni ni-edit"></em>
                                         </button>
@@ -127,24 +121,94 @@
         </div>
     </div>
 
-    {{-- Add and Edit Modal --}}
-    <div class="modal fade" id="conceptorModal">
+    {{-- Add Modal --}}
+    <div class="modal fade" id="addConceptorModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle"></h5>
+                    <h5 class="modal-title">Tambah Konseptor</h5>
                     <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <em class="icon ni ni-cross"></em>
                     </a>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST" class="form-validate is-alter" id="conceptorForm">
+                    <form action="{{ route('conceptor.store') }}" method="POST" class="form-validate is-alter">
+                        @csrf
+                        <div class="form-group">
+                            <label class="form-label" for="add_name">Nama</label>
+                            <div class="form-control-wrap">
+                                <input type="text" class="form-control" id="add_name" name="name"
+                                    placeholder="Contoh: Aldi Taher" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="add_email">Email</label>
+                            <div class="form-control-wrap">
+                                <input type="email" class="form-control" id="add_email" name="email"
+                                    placeholder="Contoh: myemail123@gmail.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="whatsapp_number">Nomor whatsapp</label>
+                            <div class="form-control-wrap">
+                                <input type="text" class="form-control" id="add_whatsapp_number" name="whatsapp_number"
+                                    placeholder="Contoh: 08139384183" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="password">Password</label>
+                            <div class="form-control-wrap">
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Masukkan password untuk konseptor baru" required>
+                            </div>
+                        </div>
+                        @can('super-admin')
+                            <div class="form-group">
+                                <div class="form-label" for="add_role">Peran</div>
+                                <div class="form-control-wrap">
+                                    <select id="add_role" class="form-select js-select2 @error('role') is-invalid @enderror"
+                                        name="role" aria-label="State" required>
+                                        <option selected disabled>Pilih Peran Konseptor</option>
+                                        <option value="Admin Pkn">Admin Penilai</option>
+                                        <option value="Admin Penilai">Admin Pkn</option>
+                                    </select>
+                                </div>
+                            </div>
+                        @endcan
+                        <div class="form-group text-end">
+                            <button type="submit" class="btn btn-lg btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Edit Modal --}}
+    <div class="modal fade" id="editConceptorModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Konseptor</h5>
+                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="POST" class="form-validate is-alter" id="editForm">
                         @csrf
                         <div class="form-group">
                             <label class="form-label" for="name">Nama</label>
                             <div class="form-control-wrap">
                                 <input type="text" class="form-control" id="name" name="name"
                                     placeholder="Contoh: Aldi Taher" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email</label>
+                            <div class="form-control-wrap">
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="Contoh: myemail123@gmail.com" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -174,11 +238,11 @@
                     </a>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST" class="form-validate is-alter" id="deleteConceptorForm">
+                    <form action="" method="POST" class="form-validate is-alter" id="deleteForm">
                         @csrf
                         @method('delete')
                         <div id="deleteMessage"></div>
-                        <div class="form-group text-end">
+                        <div class="form-group text-end mt-3">
                             <button type="submit" class="btn btn-lg btn-danger">Hapus</button>
                         </div>
                     </form>
