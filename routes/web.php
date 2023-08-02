@@ -77,8 +77,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/dokumen/2020/import', [Document2020Controller::class, 'import'])->name('document2020.import');
 
     // Document2021
-    Route::get('/dokumen/2021', [Document2021Controller::class, 'index'])->name('document2021.index');
-    Route::get('/dokumen/2021/tambah', [Document2021Controller::class, 'create'])->name('document2021.create');
+    // Sewa
+    Route::get('/dokumen/sewa/2021', [Document2021Controller::class, 'sewaIndex'])->name('document2021.sewa.index');
+    Route::get('/dokumen/sewa/2021/tambah', [Document2021Controller::class, 'create'])->name('document2021.sewa.create');
+
+    // Penjualan
+    Route::get('/dokumen/penjualan/2021', [Document2021Controller::class, 'penjualanIndex'])->name('document2021.penjualan.index');
+    Route::get('/dokumen/penjualan/2021/tambah', [Document2021Controller::class, 'create'])->name('document2021.penjualan.create');
+
+    // Penghapusan
+    Route::get('/dokumen/penghapusan/2021', [Document2021Controller::class, 'penghapusanIndex'])->name('document2021.penghapusan.index');
+    Route::get('/dokumen/penghapusan/2021/tambah', [Document2021Controller::class, 'create'])->name('document2021.penghapusan.create');
+
     Route::post('/dokumen/2021/tambah', [Document2021Controller::class, 'store'])->name('document2021.store');
     Route::get('/dokumen/2021/{id}/edit', [Document2021Controller::class, 'edit'])->name('document2021.edit');
     Route::post('/dokumen/2021/{id}/edit', [Document2021Controller::class, 'update'])->name('document2021.update');

@@ -40,7 +40,7 @@
                                         <a href="{{ route('document2020.penjualan.index')}}" class="nk-menu-link"><span class="nk-menu-text">2020</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="html/pages/auths/auth-register-v2.html" class="nk-menu-link"><span class="nk-menu-text">2021</span></a>
+                                        <a href="{{ route('document2021.penjualan.index')}}" class="nk-menu-link"><span class="nk-menu-text">2021</span></a>
                                     </li>
                                     <li class="nk-menu-item">
                                         <a href="html/pages/auths/auth-reset-v2.html" class="nk-menu-link"><span class="nk-menu-text">2022</span></a>
@@ -57,7 +57,7 @@
                                         <a href="{{ route('document2020.penghapusan.index')}}" class="nk-menu-link"><span class="nk-menu-text">2020</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="html/pages/auths/auth-register-v2.html" class="nk-menu-link"><span class="nk-menu-text">2021</span></a>
+                                        <a href="{{ route('document2021.penghapusan.index')}}" class="nk-menu-link"><span class="nk-menu-text">2021</span></a>
                                     </li>
                                     <li class="nk-menu-item">
                                         <a href="html/pages/auths/auth-reset-v2.html" class="nk-menu-link"><span class="nk-menu-text">2022</span></a>
@@ -74,7 +74,7 @@
                                         <a href="{{ route('document2020.sewa.index')}}" class="nk-menu-link"><span class="nk-menu-text">2020</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="html/pages/auths/auth-register-v2.html" class="nk-menu-link"><span class="nk-menu-text">2021</span></a>
+                                        <a href="{{ route('document2021.sewa.index')}}" class="nk-menu-link"><span class="nk-menu-text">2021</span></a>
                                     </li>
                                     <li class="nk-menu-item">
                                         <a href="html/pages/auths/auth-reset-v2.html" class="nk-menu-link"><span class="nk-menu-text">2022</span></a>
