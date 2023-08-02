@@ -151,7 +151,7 @@
                                     <div class="form-control-wrap">
                                         <select id="jenis_persetujuan"
                                             class="form-select js-select2 @error('jenis_persetujuan') is-invalid @enderror"
-                                            name="jenis_persetujuan" id="floatingSelect" aria-label="State" required>
+                                            name="jenis_persetujuan" aria-label="State" required>
                                             <option selected disabled>Pilih Jenis Persetujuan</option>
                                             <option value="Sewa">Sewa</option>
                                             <option value="Penjualan">Penjualan</option>
@@ -165,24 +165,42 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="conceptor">Konseptor</label>
+                                    <label class="form-label" for="user_id_pkn">Konseptor Pkn</label>
                                     <div class="form-control-wrap">
-                                        <select id="conceptor"
-                                            class="form-select js-select2 @error('conceptor_id') is-invalid @enderror"
-                                            name="conceptor_id" id="floatingSelect" aria-label="State"
-                                            value="{{ old('conceptor_id') }}" required>
-                                            <option selected disabled>Pilih Konseptor</option>
-                                            @foreach ($conceptors as $conceptor)
-                                                <option value="{{ $conceptor->id }}">{{ $conceptor->name }}</option>
+                                        <select id="user_id_pkn"
+                                            class="form-select js-select2 @error('user_id_pkn') is-invalid @enderror"
+                                            name="user_id_pkn" aria-label="State" value="{{ old('user_id_pkn') }}"
+                                            required>
+                                            <option selected disabled>Pilih Konseptor Pkn</option>
+                                            @foreach ($pkn_conceptors as $pkn)
+                                                <option value="{{ $pkn->id }}">{{ $pkn->name }}</option>
                                             @endforeach
                                         </select>
-                                        @error('conceptor_id')
+                                        @error('user_id_pkn')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="user_id_penilai">Konseptor Penilai</label>
+                                    <div class="form-control-wrap">
+                                        <select id="user_id_penilai"
+                                            class="form-select js-select2 @error('user_id_penilai') is-invalid @enderror"
+                                            name="user_id_penilai" aria-label="State" value="{{ old('user_id_penilai') }}"
+                                            required>
+                                            <option selected disabled>Pilih Konseptor Penilai</option>
+                                            @foreach ($penilai_conceptors as $penilai)
+                                                <option value="{{ $penilai->id }}">{{ $penilai->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('user_id_penilai')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="form-label" for="nomor_nd_permohonan_penilaian">Nomor ND Permohonan

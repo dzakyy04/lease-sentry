@@ -37,16 +37,16 @@
                                 <a href="#" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-text">Penjualan</span></a>
                                 <ul class="nk-menu-sub">
                                     <li class="nk-menu-item">
-                                        <a href="{{ route('document2020.penjualan.index')}}" class="nk-menu-link" target="_blank"><span class="nk-menu-text">2020</span></a>
+                                        <a href="{{ route('document2020.penjualan.index')}}" class="nk-menu-link"><span class="nk-menu-text">2020</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="html/pages/auths/auth-register-v2.html" class="nk-menu-link" target="_blank"><span class="nk-menu-text">2021</span></a>
+                                        <a href="html/pages/auths/auth-register-v2.html" class="nk-menu-link"><span class="nk-menu-text">2021</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="html/pages/auths/auth-reset-v2.html" class="nk-menu-link" target="_blank"><span class="nk-menu-text">2022</span></a>
+                                        <a href="html/pages/auths/auth-reset-v2.html" class="nk-menu-link"><span class="nk-menu-text">2022</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="html/pages/auths/auth-success-v2.html" class="nk-menu-link" target="_blank"><span class="nk-menu-text">2023</span></a>
+                                        <a href="html/pages/auths/auth-success-v2.html" class="nk-menu-link"><span class="nk-menu-text">2023</span></a>
                                     </li>
                                 </ul>
                             </li>
@@ -54,16 +54,16 @@
                                 <a href="#" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-text">Penghapusan</span></a>
                                 <ul class="nk-menu-sub">
                                     <li class="nk-menu-item">
-                                        <a href="{{ route('document2020.penghapusan.index')}}" class="nk-menu-link" target="_blank"><span class="nk-menu-text">2020</span></a>
+                                        <a href="{{ route('document2020.penghapusan.index')}}" class="nk-menu-link"><span class="nk-menu-text">2020</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="html/pages/auths/auth-register-v2.html" class="nk-menu-link" target="_blank"><span class="nk-menu-text">2021</span></a>
+                                        <a href="html/pages/auths/auth-register-v2.html" class="nk-menu-link"><span class="nk-menu-text">2021</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="html/pages/auths/auth-reset-v2.html" class="nk-menu-link" target="_blank"><span class="nk-menu-text">2022</span></a>
+                                        <a href="html/pages/auths/auth-reset-v2.html" class="nk-menu-link"><span class="nk-menu-text">2022</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="html/pages/auths/auth-success-v2.html" class="nk-menu-link" target="_blank"><span class="nk-menu-text">2023</span></a>
+                                        <a href="html/pages/auths/auth-success-v2.html" class="nk-menu-link"><span class="nk-menu-text">2023</span></a>
                                     </li>
                                 </ul>
                             </li>
@@ -71,16 +71,16 @@
                                 <a href="#" class="nk-menu-link nk-menu-toggle"><span class="nk-menu-text">Sewa</span></a>
                                 <ul class="nk-menu-sub">
                                     <li class="nk-menu-item">
-                                        <a href="{{ route('document2020.sewa.index')}}" class="nk-menu-link" target="_blank"><span class="nk-menu-text">2020</span></a>
+                                        <a href="{{ route('document2020.sewa.index')}}" class="nk-menu-link"><span class="nk-menu-text">2020</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="html/pages/auths/auth-register-v2.html" class="nk-menu-link" target="_blank"><span class="nk-menu-text">2021</span></a>
+                                        <a href="html/pages/auths/auth-register-v2.html" class="nk-menu-link"><span class="nk-menu-text">2021</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="html/pages/auths/auth-reset-v2.html" class="nk-menu-link" target="_blank"><span class="nk-menu-text">2022</span></a>
+                                        <a href="html/pages/auths/auth-reset-v2.html" class="nk-menu-link"><span class="nk-menu-text">2022</span></a>
                                     </li>
                                     <li class="nk-menu-item">
-                                        <a href="html/pages/auths/auth-success-v2.html" class="nk-menu-link" target="_blank"><span class="nk-menu-text">2023</span></a>
+                                        <a href="html/pages/auths/auth-success-v2.html" class="nk-menu-link"><span class="nk-menu-text">2023</span></a>
                                     </li>
                                 </ul>
                             </li>

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Helper;
 use Carbon\Carbon;
-use App\Models\Conceptor;
+use App\Models\User;
+use App\Helpers\Helper;
 use App\Models\Document2020;
 use Illuminate\Http\Request;
 use App\Imports\Document2020Import;
@@ -15,7 +15,7 @@ class Document2020Controller extends Controller
     public function sewaIndex()
     {
         $title = 'Dokumen Sewa 2020';
-        $documents = Document2020::with('conceptor')->where('jenis_persetujuan', 'Sewa')->get();
+        $documents = Document2020::with(['user_pkn', 'user_penilai'])->where('jenis_persetujuan', 'Sewa')->get();
 
         $documents = $documents->map(function ($document) {
             if ($document->jenis_persetujuan == 'Sewa') {
@@ -42,7 +42,7 @@ class Document2020Controller extends Controller
     public function penjualanIndex()
     {
         $title = 'Dokumen Penjualan 2020';
-        $documents = Document2020::with('conceptor')->where('jenis_persetujuan', 'Penjualan')->get();
+        $documents = Document2020::with(['user_pkn', 'user_penilai'])->where('jenis_persetujuan', 'Penjualan')->get();
 
         $documents = $documents->map(function ($document) {
 
@@ -61,7 +61,7 @@ class Document2020Controller extends Controller
     public function penghapusanIndex()
     {
         $title = 'Dokumen Penghapusan 2020';
-        $documents = Document2020::with('conceptor')->where('jenis_persetujuan', 'Penghapusan')->get();
+        $documents = Document2020::with(['user_pkn', 'user_penilai'])->where('jenis_persetujuan', 'Penghapusan')->get();
 
         $documents = $documents->map(function ($document) {
 
@@ -107,8 +107,9 @@ class Document2020Controller extends Controller
     {
         $this->authorize('admin-pkn-super-admin');
         $title = 'Tambah Dokumen 2020';
-        $conceptors = Conceptor::get();
-        return view('dokumen.dokumen2020.create', compact('title', 'conceptors'));
+        $pkn_conceptors = User::where('role', 'Admin Pkn')->orderBy('name')->get();
+        $penilai_conceptors = User::where('role', 'Admin Penilai')->orderBy('name')->get();
+        return view('dokumen.dokumen2020.create', compact('title', 'pkn_conceptors', 'penilai_conceptors'));
     }
 
     public function store(Request $request)
@@ -121,7 +122,8 @@ class Document2020Controller extends Controller
             'tanggal_surat_masuk' => 'required',
             'tanggal_surat_diterima' => 'required',
             'jenis_persetujuan' => 'required',
-            'conceptor_id' => 'required',
+            'user_id_pkn' => 'required',
+            'user_id_penilai' => 'required',
             'nomor_nd_permohonan_penilaian' => 'nullable',
             'tanggal_nd_permohonan_penilaian' => 'nullable'
         ]);
@@ -150,10 +152,11 @@ class Document2020Controller extends Controller
     public function edit($id)
     {
         $title = 'Edit Dokumen 2020';
-        $document = Document2020::with('conceptor')->findOrFail($id);
+        $document = Document2020::with(['user_pkn', 'user_penilai'])->findOrFail($id);
         $progress = json_decode($document->progress);
-        $conceptors = Conceptor::get();
-        return view('dokumen.dokumen2020.edit', compact('title', 'document', 'progress', 'conceptors'));
+        $pkn_conceptors = User::where('role', 'Admin Pkn')->orderBy('name')->get();
+        $penilai_conceptors = User::where('role', 'Admin Penilai')->orderBy('name')->get();
+        return view('dokumen.dokumen2020.edit', compact('title', 'document', 'progress', 'pkn_conceptors', 'penilai_conceptors'));
     }
 
     public function update($id, Request $request)
@@ -166,7 +169,8 @@ class Document2020Controller extends Controller
             'tanggal_surat_masuk' => 'nullable',
             'tanggal_surat_diterima' => 'nullable',
             'jenis_persetujuan' => 'nullable',
-            'conceptor_id' => 'nullable',
+            'user_id_pkn' => 'nullable',
+            'user_id_penilai' => 'nullable',
             'nomor_nd_permohonan_penilaian' => 'nullable',
             'tanggal_nd_permohonan_penilaian' => 'nullable',
             // Progress penilaian
@@ -180,7 +184,7 @@ class Document2020Controller extends Controller
             'periode_sewa' => 'nullable'
         ]);
 
-        $document = Document2020::with('conceptor')->findOrFail($id);
+        $document = Document2020::with(['user_pkn', 'user_penilai'])->findOrFail($id);
         $progress = json_decode($document->progress);
         $today = now()->toDateString();
 
@@ -230,7 +234,7 @@ class Document2020Controller extends Controller
 
     public function delete($id)
     {
-        $document = Document2020::with('conceptor')->findorFail($id);
+        $document = Document2020::with(['user_pkn', 'user_penilai'])->findorFail($id);
 
         $document->delete();
 

@@ -1,3 +1,4 @@
+{{-- {{ dd($documents) }} --}}
 @extends('layouts.app')
 
 @push('js')
@@ -37,7 +38,7 @@
         <div class="nk-block nk-block-lg">
             <div class="nk-block-head">
                 <div class="nk-block-head-content">
-                    <h4 class="nk-block-title">Dokumen 2020</h4>
+                    <h4 class="nk-block-title">Dokumen Penjualan 2020</h4>
                 </div>
             </div>
             <div class="card card-bordered card-preview">
@@ -76,7 +77,10 @@
                                 </th>
                                 <th class="text-nowrap text-center align-middle">Status <br class="break">Progress</th>
                                 <th class="text-nowrap text-center align-middle">
-                                    Konseptor
+                                    Konseptor Pkn
+                                </th>
+                                <th class="text-nowrap text-center align-middle">
+                                    Konseptor Penilai
                                 </th>
                                 <th class="text-nowrap text-center align-middle">
                                     Nomor Whatsapp <br class="break">Satker
@@ -96,7 +100,6 @@
                                 <th class="text-nowrap text-center align-middle">Nilai Proporsional <br class="break">Harga
                                     Perolehan</th>
                                 <th class="text-nowrap text-center align-middle">Nilai <br class="break">Persetujuan</th>
-                                <th class="text-nowrap text-center align-middle">Periode <br class="break">Sewa</th>
                                 <th class="text-nowrap text-center align-middle">Total <br class="break">Hari</th>
                                 <th class="text-nowrap text-center no-export align-middle">Aksi</th>
                             </tr>
@@ -117,7 +120,10 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <span>{{ $document->conceptor->name }}</span>
+                                        <span>{{ $document->user_pkn->name }}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{ $document->user_penilai->name }}</span>
                                     </td>
                                     <td>{{ $document->nomor_whatsapp_satker }}</td>
                                     <td>{{ $document->nomor_nd_permohonan_penilaian ? $document->nomor_nd_permohonan_penilaian : '-' }}
@@ -138,7 +144,6 @@
                                         {{ $document->nilai_proporsional_harga_perolehan_nilai_bmn ? $document->nilai_proporsional_harga_perolehan_nilai_bmn : '-' }}
                                     </td>
                                     <td>{{ $document->nilai_persetujuan ? $document->nilai_persetujuan : '-' }}</td>
-                                    <td>{{ $document->periode_sewa ? $document->periode_sewa : '-' }}</td>
                                     <td>{{ $document->total_hari ? $document->total_hari : '-' }}</td>
                                     <td class="text-nowrap">
                                         <a href="{{ route('document2020.edit', $document->id) }}"

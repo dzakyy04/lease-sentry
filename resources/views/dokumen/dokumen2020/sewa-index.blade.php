@@ -1,3 +1,4 @@
+{{-- {{ dd($documents) }} --}}
 @extends('layouts.app')
 
 @push('js')
@@ -76,7 +77,10 @@
                                 </th>
                                 <th class="text-nowrap text-center align-middle">Status <br class="break">Progress</th>
                                 <th class="text-nowrap text-center align-middle">
-                                    Konseptor
+                                    Konseptor Pkn
+                                </th>
+                                <th class="text-nowrap text-center align-middle">
+                                    Konseptor Penilai
                                 </th>
                                 <th class="text-nowrap text-center align-middle">
                                     Nomor Whatsapp <br class="break">Satker
@@ -118,7 +122,10 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <span>{{ $document->conceptor->name }}</span>
+                                        <span>{{ $document->user_pkn->name }}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{ $document->user_penilai->name }}</span>
                                     </td>
                                     <td>{{ $document->nomor_whatsapp_satker }}</td>
                                     <td>{{ $document->nomor_nd_permohonan_penilaian ? $document->nomor_nd_permohonan_penilaian : '-' }}
