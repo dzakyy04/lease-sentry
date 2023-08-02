@@ -40,28 +40,26 @@
 @endpush
 
 @section('content')
-    <div class="card">
-        <div class="card-aside-wrap">
-            <div class="card-inner card-inner-lg">
-                <div class="nk-block-head nk-block-head-lg">
-                    <div class="nk-block-between">
-                        <div class="nk-block-head-content">
-                            <h4 class="nk-block-title">Ubah Password</h4>
-                            <div class="nk-block-des">
-                                <p>Silahkan masukkan password saat ini dan password baru anda.</p>
-                            </div>
-                        </div>
-                    </div>
+    <div class="components-preview wide-xs mx-auto">
+        <div class="nk-block nk-block-lg">
+            <div class="nk-block-head">
+                <div class="nk-block-head-content">
+                    <h4 class="nk-block-title">Ubah Password</h4>
                 </div>
-                <div class="nk-block">
-                    <div class="card">
+
+            </div>
+            <div class="card card-bordered card-preview">
+                <div class="card-inner">
+                    <div class="preview-block">
+                        <span class="preview-title-sm overline-title">Silahkan masukkan password baru anda.</span>
                         <div class="card-inner-group">
                             <div class="card-inner">
                                 <form action="{{ route('change-password.action') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
                                         <div class="form-label-group">
-                                            <label class="form-label" for="current_password">Password Saat Ini</label>
+                                            <label class="form-label" for="current_password">Password Saat
+                                                Ini</label>
                                         </div>
                                         <div class="form-control-wrap">
                                             <a href="#" class="form-icon form-icon-right passcode-switch lg"
@@ -71,8 +69,8 @@
                                             </a>
                                             <input type="password"
                                                 class="form-control form-control-lg @error('current_password')
-                                                error
-                                            @enderror"
+                                                                error
+                                                            @enderror"
                                                 id="current_password" name="current_password"
                                                 placeholder="Masukkan password saat ini">
                                             @error('current_password')
@@ -92,8 +90,8 @@
                                             </a>
                                             <input type="password"
                                                 class="form-control form-control-lg @error('password')
-                                                error
-                                            @enderror"
+                                                                error
+                                                            @enderror"
                                                 id="password" name="password" placeholder="Masukkan password baru">
                                             @error('password')
                                                 <small class="text-danger">{{ $message }}</small>
@@ -113,8 +111,8 @@
                                             </a>
                                             <input type="password"
                                                 class="form-control form-control-lg @error('password_confirmation')
-                                                error
-                                            @enderror"
+                                                                error
+                                                            @enderror"
                                                 id="password_confirmation" name="password_confirmation"
                                                 placeholder="Masukkan konfirmasi password">
                                             @error('password_confirmation')
