@@ -18,22 +18,20 @@
     </script>
     <script>
         const formatNumberWithDots = (input) => input.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    
+
         const updateFormattedValue = (inputId) => {
             const inputElement = document.getElementById(inputId);
             const formattedValue = formatNumberWithDots(inputElement.value);
             inputElement.value = formattedValue;
         };
-    
+
         const formatInputWithDots = (inputId) => {
             document.getElementById(inputId).addEventListener("input", () => updateFormattedValue(inputId));
         };
-    
+
         formatInputWithDots("nilai_proporsional_harga_perolehan_nilai_bmn");
         formatInputWithDots("nilai_persetujuan");
     </script>
-    
-    
 @endpush
 
 @section('content')
@@ -393,7 +391,8 @@
                                     <div class="form-control-wrap">
                                         <input type="text" id="nilai_proporsional_harga_perolehan_nilai_bmn"
                                             class="form-control @error('nilai_proporsional_harga_perolehan_nilai_bmn') is-invalid @enderror"
-                                            name="nilai_proporsional_harga_perolehan_nilai_bmn" oninput="formatInputWithDots('nilai_proporsional_harga_perolehan_nilai_bmn')"
+                                            name="nilai_proporsional_harga_perolehan_nilai_bmn"
+                                            oninput="formatInputWithDots('nilai_proporsional_harga_perolehan_nilai_bmn')"
                                             placeholder="Contoh: 447.172.400"
                                             value="{{ $document->nilai_proporsional_harga_perolehan_nilai_bmn }}"
                                             @if (Auth::user()->role != 'Admin Penilai' && !$progress->dinilai->isCompleted) disabled @endif
@@ -413,7 +412,8 @@
                                         <input type="text" id="nilai_persetujuan"
                                             class="form-control @error('nilai_persetujuan') is-invalid @enderror"
                                             name="nilai_persetujuan" placeholder="Contoh: 450.000.000"
-                                            value="{{ $document->nilai_persetujuan }}" oninput="formatInputWithDots('nilai_persetujuan')"
+                                            value="{{ $document->nilai_persetujuan }}"
+                                            oninput="formatInputWithDots('nilai_persetujuan')"
                                             @if (Auth::user()->role != 'Admin Penilai' && !$progress->dinilai->isCompleted) disabled @endif
                                             @can('admin-penilai')
                                             disabled

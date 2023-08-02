@@ -4,6 +4,29 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/libs/bootstrap-icons.min.css') }}">
 @endpush
 
+@push('js')
+    <script>
+        const currentRoute = window.location.pathname;
+        const routeSewa = "/sewa";
+        const routePenjualan = "/penjualan";
+        const routePenghapusan = "/penghapusan";
+        const jenisPersetujuanSelect = document.getElementById("jenis_persetujuan");
+
+        function showOptionsBasedOnRoute(route, optionValue) {
+            if (currentRoute.includes(route)) {
+                const option = document.createElement("option");
+                option.value = optionValue;
+                option.text = optionValue;
+                jenisPersetujuanSelect.appendChild(option);
+            }
+        }
+        jenisPersetujuanSelect.innerHTML = "";
+        showOptionsBasedOnRoute("/sewa", "Sewa");
+        showOptionsBasedOnRoute("/penjualan", "Penjualan");
+        showOptionsBasedOnRoute("/penghapusan", "Penghapusan");
+    </script>
+@endpush
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -46,7 +69,8 @@
             <div class="card-inner">
                 <div class="preview-block">
                     <span class="preview-title-lg overline-title">Masukkan Data Surat Masuk</span>
-                    <form method="post" action="{{ route('document2020.store') }}" class="is-alter form-validate form-control-wrap">
+                    <form method="post" action="{{ route('document2020.store') }}"
+                        class="is-alter form-validate form-control-wrap">
                         @csrf
                         <div class="row gy-4">
                             <div class="col-sm-6">
@@ -55,7 +79,8 @@
                                     <div class="form-control-wrap">
                                         <input type="text" id="satker"
                                             class="form-control @error('satker') is-invalid @enderror" name="satker"
-                                            placeholder="Contoh: Universitas Sriwijaya" value="{{ old('satker') }}" required>
+                                            placeholder="Contoh: Universitas Sriwijaya" value="{{ old('satker') }}"
+                                            required>
                                         @error('satker')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -112,7 +137,8 @@
                                     <div class="form-control-wrap">
                                         <input type="date" id="tanggal_surat_diterima"
                                             class="form-control @error('tanggal_surat_diterima') is-invalid @enderror"
-                                            name="tanggal_surat_diterima" value="{{ old('tanggal_surat_diterima') }}" required>
+                                            name="tanggal_surat_diterima" value="{{ old('tanggal_surat_diterima') }}"
+                                            required>
                                         @error('tanggal_surat_diterima')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror

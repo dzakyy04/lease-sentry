@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/ubah-password', [AuthController::class, 'changePassword'])->name('change-password.view');
     Route::post('/ubah-password', [AuthController::class, 'updatePassword'])->name('change-password.action');
-    
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
     // Hari Libur
@@ -58,8 +58,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/konseptor/{id}/hapus', [ConceptorController::class, 'delete'])->name('conceptor.delete');
 
     // Document2020
-    Route::get('/dokumen/2020', [Document2020Controller::class, 'index'])->name('document2020.index');
-    Route::get('/dokumen/2020/tambah', [Document2020Controller::class, 'create'])->name('document2020.create');
+    // Sewa
+    Route::get('/dokumen/sewa/2020', [Document2020Controller::class, 'sewaIndex'])->name('document2020.sewa.index');
+    Route::get('/dokumen/sewa/2020/tambah', [Document2020Controller::class, 'create'])->name('document2020.sewa.create');
+
+    // Penjualan
+    Route::get('/dokumen/penjualan/2020', [Document2020Controller::class, 'penjualanIndex'])->name('document2020.penjualan.index');
+    Route::get('/dokumen/penjualan/2020/tambah', [Document2020Controller::class, 'create'])->name('document2020.penjualan.create');
+
+    // Penghapusan
+    Route::get('/dokumen/penghapusan/2020', [Document2020Controller::class, 'penghapusanIndex'])->name('document2020.penghapusan.index');
+    Route::get('/dokumen/penghapusan/2020/tambah', [Document2020Controller::class, 'create'])->name('document2020.penghapusan.create');
+
     Route::post('/dokumen/2020/tambah', [Document2020Controller::class, 'store'])->name('document2020.store');
     Route::get('/dokumen/2020/{id}/edit', [Document2020Controller::class, 'edit'])->name('document2020.edit');
     Route::post('/dokumen/2020/{id}/edit', [Document2020Controller::class, 'update'])->name('document2020.update');

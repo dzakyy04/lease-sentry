@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <a href="{{ route('document2020.index') }}" class="col-md-4 card">
+        <a href="" class="col-md-4 card">
             <div class="nk-ecwg nk-ecwg6">
                 <div class="card-inner">
                     <div class="card-title-group">

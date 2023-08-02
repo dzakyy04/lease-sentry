@@ -12,10 +12,10 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class Document2020Controller extends Controller
 {
-    public function index()
+    public function sewaIndex()
     {
-        $title = 'Dokumen 2020';
-        $documents = Document2020::with('conceptor')->get();
+        $title = 'Dokumen Sewa 2020';
+        $documents = Document2020::with('conceptor')->where('jenis_persetujuan', 'Sewa')->get();
 
         $documents = $documents->map(function ($document) {
             if ($document->jenis_persetujuan == 'Sewa') {
@@ -36,7 +36,45 @@ class Document2020Controller extends Controller
             return $document;
         });
 
-        return view('dokumen.dokumen2020.index', compact('title', 'documents'));
+        return view('dokumen.dokumen2020.sewa-index', compact('title', 'documents'));
+    }
+
+    public function penjualanIndex()
+    {
+        $title = 'Dokumen Penjualan 2020';
+        $documents = Document2020::with('conceptor')->where('jenis_persetujuan', 'Penjualan')->get();
+
+        $documents = $documents->map(function ($document) {
+
+            $document->formatted_tanggal_surat_masuk = $this->formatDate($document->tanggal_surat_masuk);
+            $document->formatted_tanggal_surat_diterima = $this->formatDate($document->tanggal_surat_diterima);
+            $document->formatted_tanggal_nd_permohonan_penilaian = $this->formatDate($document->tanggal_nd_permohonan_penilaian);
+            $document->formatted_tanggal_ndr_diterima_penilaian = $this->formatDate($document->tanggal_ndr_diterima_penilaian);
+            $document->formatted_tanggal_surat_persetujuan_penolakan = $this->formatDate($document->tanggal_surat_persetujuan_penolakan);
+
+            return $document;
+        });
+
+        return view('dokumen.dokumen2020.penjualan-index', compact('title', 'documents'));
+    }
+
+    public function penghapusanIndex()
+    {
+        $title = 'Dokumen Penghapusan 2020';
+        $documents = Document2020::with('conceptor')->where('jenis_persetujuan', 'Penghapusan')->get();
+
+        $documents = $documents->map(function ($document) {
+
+            $document->formatted_tanggal_surat_masuk = $this->formatDate($document->tanggal_surat_masuk);
+            $document->formatted_tanggal_surat_diterima = $this->formatDate($document->tanggal_surat_diterima);
+            $document->formatted_tanggal_nd_permohonan_penilaian = $this->formatDate($document->tanggal_nd_permohonan_penilaian);
+            $document->formatted_tanggal_ndr_diterima_penilaian = $this->formatDate($document->tanggal_ndr_diterima_penilaian);
+            $document->formatted_tanggal_surat_persetujuan_penolakan = $this->formatDate($document->tanggal_surat_persetujuan_penolakan);
+
+            return $document;
+        });
+
+        return view('dokumen.dokumen2020.penghapusan-index', compact('title', 'documents'));
     }
 
     private function formatDate($date)
@@ -103,8 +141,10 @@ class Document2020Controller extends Controller
         }
 
         Document2020::create($data);
+        $type = strtolower($request->jenis_persetujuan);
+        $path = env('APP_URL') . "/dokumen/$type/2020";
 
-        return redirect()->route('document2020.index')->with('success', 'Dokumen berhasil ditambahkan');
+        return redirect($path)->with('success', 'Dokumen berhasil ditambahkan');
     }
 
     public function edit($id)
@@ -182,8 +222,10 @@ class Document2020Controller extends Controller
         $data['progress'] = json_encode($progress);
 
         $document->update($data);
+        $type = strtolower($request->jenis_persetujuan);
+        $path = env('APP_URL') . "/dokumen/$type/2020";
 
-        return redirect()->route('document2020.index')->with('success', 'Dokumen berhasil diedit');
+        return redirect($path)->with('success', 'Dokumen berhasil diedit');
     }
 
     public function delete($id)
@@ -202,6 +244,6 @@ class Document2020Controller extends Controller
         $file->move('Document2020', $fileName);
 
         Excel::import(new Document2020Import, public_path('Document2020/' . $fileName));
-        return redirect()->route('document2020.index')->with('success', "Dokumen berhasil diimport");
+        return back()->with('success', "Dokumen berhasil diimport");
     }
 }

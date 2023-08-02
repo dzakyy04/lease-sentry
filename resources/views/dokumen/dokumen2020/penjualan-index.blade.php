@@ -44,7 +44,7 @@
                 <div class="card-inner">
                     @can(['admin-pkn-super-admin'])
                         <div class="d-flex">
-                            <a href="{{ route('document2020.create') }}" class="btn btn-primary mb-2 me-2">
+                            <a href="{{ route('document2020.penjualan.create') }}" class="btn btn-primary mb-2 me-2">
                                 <em class="icon ni ni-plus me-1"></em> Tambah Dokumen</span>
                             </a>
                             <button type="button" class="btn btn-secondary mb-2" data-bs-toggle="modal"
@@ -98,7 +98,6 @@
                                 <th class="text-nowrap text-center align-middle">Nilai <br class="break">Persetujuan</th>
                                 <th class="text-nowrap text-center align-middle">Periode <br class="break">Sewa</th>
                                 <th class="text-nowrap text-center align-middle">Total <br class="break">Hari</th>
-                                <th class="text-nowrap text-center align-middle">Status <br class="break">Sewa</th>
                                 <th class="text-nowrap text-center no-export align-middle">Aksi</th>
                             </tr>
                         </thead>
@@ -141,18 +140,6 @@
                                     <td>{{ $document->nilai_persetujuan ? $document->nilai_persetujuan : '-' }}</td>
                                     <td>{{ $document->periode_sewa ? $document->periode_sewa : '-' }}</td>
                                     <td>{{ $document->total_hari ? $document->total_hari : '-' }}</td>
-                                    <td>
-                                        <span
-                                            class="{{ $document->status_masa_aktif === 'Aktif'
-                                                ? 'badge badge-dot bg-success'
-                                                : ($document->status_masa_aktif === 'Tenggang'
-                                                    ? 'badge badge-dot bg-warning'
-                                                    : ($document->status_masa_aktif === 'Non-aktif'
-                                                        ? 'badge badge-dot bg-danger'
-                                                        : '')) }}">
-                                            {{ $document->status_masa_aktif }}
-                                        </span>
-                                    </td>
                                     <td class="text-nowrap">
                                         <a href="{{ route('document2020.edit', $document->id) }}"
                                             class="btn btn-warning btn-xs rounded-pill">
