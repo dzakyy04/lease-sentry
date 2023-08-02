@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             HolidaySeeder::class,
             Document2020Seeder::class,
             Document2021Seeder::class,
+            Document2022Seeder::class,
         ]);
     }
 }

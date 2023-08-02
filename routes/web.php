@@ -95,9 +95,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dokumen/2021/{id}/hapus', [Document2021Controller::class, 'delete'])->name('document2021.delete');
     Route::post('/dokumen/2021/import', [Document2021Controller::class, 'import'])->name('document2021.import');
 
-    // Document2021
-    Route::get('/dokumen/2022', [Document2022Controller::class, 'index'])->name('document2022.index');
-    Route::get('/dokumen/2022/tambah', [Document2022Controller::class, 'create'])->name('document2022.create');
+    // Document2022
+    // Sewa
+    Route::get('/dokumen/sewa/2022', [Document2022Controller::class, 'sewaIndex'])->name('document2022.sewa.index');
+    Route::get('/dokumen/sewa/2022/tambah', [Document2022Controller::class, 'create'])->name('document2022.sewa.create');
+
+    // Penjualan
+    Route::get('/dokumen/penjualan/2022', [Document2022Controller::class, 'penjualanIndex'])->name('document2022.penjualan.index');
+    Route::get('/dokumen/penjualan/2022/tambah', [Document2022Controller::class, 'create'])->name('document2022.penjualan.create');
+
+    // Penghapusan
+    Route::get('/dokumen/penghapusan/2022', [Document2022Controller::class, 'penghapusanIndex'])->name('document2022.penghapusan.index');
+    Route::get('/dokumen/penghapusan/2022/tambah', [Document2022Controller::class, 'create'])->name('document2022.penghapusan.create');
+
     Route::post('/dokumen/2022/tambah', [Document2022Controller::class, 'store'])->name('document2022.store');
     Route::get('/dokumen/2022/{id}/edit', [Document2022Controller::class, 'edit'])->name('document2022.edit');
     Route::post('/dokumen/2022/{id}/edit', [Document2022Controller::class, 'update'])->name('document2022.update');
