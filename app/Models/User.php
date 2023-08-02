@@ -42,4 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function document2020s()
+    {
+        return $this->hasMany(Document2020::class);
+    }
 }

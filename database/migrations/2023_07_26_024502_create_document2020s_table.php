@@ -20,7 +20,8 @@ return new class extends Migration
             $table->date('tanggal_surat_masuk')->nullable();
             $table->date('tanggal_surat_diterima')->nullable();
             $table->string('jenis_persetujuan')->nullable();
-            $table->foreignId('conceptor_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('user_id_pkn')->nullable()->constrained('users', 'id')->onDelete('set null');
+            $table->foreignId('user_id_penilai')->nullable()->constrained('users', 'id')->onDelete('set null');
             $table->string('nomor_nd_permohonan_penilaian')->nullable();
             $table->date('tanggal_nd_permohonan_penilaian')->nullable();
             // Progress Penilaian

@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use App\Models\Conceptor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -17,8 +15,8 @@ class Document2020 extends Model
         'progress' => '{"masuk":{"day":0,"isCompleted":false,"completion_date":null},"dinilai":{"day":0,"isCompleted":false,"completion_date":null},"selesai":{"day":0,"isCompleted":false,"completion_date":null}}'
     ];
 
-    public function conceptor()
+    public function user()
     {
-        return $this->belongsTo(Conceptor::class);
+        return $this->belongsTo(User::class);
     }
 }

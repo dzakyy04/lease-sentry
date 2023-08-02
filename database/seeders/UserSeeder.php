@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
@@ -15,24 +14,91 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Kiagus Efan Fitriyan',
-            'email' => 'superadmin@gmail.com',
-            'password' => Hash::make('password'),
+            'name' => 'Akun Super Admin',
+            'email' => 'pkn.palembang@gmail.com',
+            'whatsapp_number' => '0811303743',
             'role' => 'Super Admin',
+            'password' => Hash::make('password123'),
         ]);
 
         User::create([
-            'name' => 'Iman Carrazi Syamsidi',
-            'email' => 'adminpkn@gmail.com',
-            'password' => Hash::make('password'),
+            'name' => 'Agung Fitriandi Nugroho',
+            'email' => 'adminpkn1@gmail.com',
+            'whatsapp_number' => '085740319698',
             'role' => 'Admin Pkn',
+            'password' => Hash::make('password123'),
         ]);
 
         User::create([
-            'name' => 'Iman Carrazi Syamsidi',
-            'email' => 'adminpenilai@gmail.com',
-            'password' => Hash::make('password'),
+            'name' => 'Abdul Rohman Lubis',
+            'email' => 'adminpkn2@gmail.com',
+            'whatsapp_number' => '082246440726',
+            'role' => 'Admin Pkn',
+            'password' => Hash::make('password123'),
+        ]);
+
+        User::create([
+            'name' => 'Ruyanto',
+            'email' => 'adminpkn3@gmail.com',
+            'whatsapp_number' => '081368333686',
+            'role' => 'Admin Pkn',
+            'password' => Hash::make('password123'),
+        ]);
+
+        User::create([
+            'name' => 'Akhmad Taupikur Rahman',
+            'email' => 'adminpkn4@gmail.com',
+            'whatsapp_number' => '085287936525',
+            'role' => 'Admin Pkn',
+            'password' => Hash::make('password123'),
+        ]);
+
+        User::create([
+            'name' => 'Nancy Grace Pasaribu',
+            'email' => 'adminpkn5@gmail.com',
+            'whatsapp_number' => '081273035356',
+            'role' => 'Admin Pkn',
+            'password' => Hash::make('password123'),
+        ]);
+
+        User::create([
+            'name' => 'Wiyana',
+            'email' => 'adminpkn6@gmail.com',
+            'whatsapp_number' => '082136396070',
+            'role' => 'Admin Pkn',
+            'password' => Hash::make('password123'),
+        ]);
+
+        User::create([
+            'name' => 'Albet Aruan',
+            'email' => 'adminpenilai1@gmail.com',
+            'whatsapp_number' => '085279716286',
             'role' => 'Admin Penilai',
+            'password' => Hash::make('password123'),
+        ]);
+
+        User::create([
+            'name' => 'Syamsul Bahri',
+            'email' => 'adminpenilai2@gmail.com',
+            'whatsapp_number' => '081337106430',
+            'role' => 'Admin Penilai',
+            'password' => Hash::make('password123'),
+        ]);
+
+        User::create([
+            'name' => 'Muhamad Christian',
+            'email' => 'adminpenilai3@gmail.com',
+            'whatsapp_number' => '08117209690',
+            'role' => 'Admin Penilai',
+            'password' => Hash::make('password123'),
+        ]);
+
+        User::create([
+            'name' => 'Romas Fahdiar',
+            'email' => 'adminpenilai4@gmail.com',
+            'whatsapp_number' => '081229111988',
+            'role' => 'Admin Penilai',
+            'password' => Hash::make('password123'),
         ]);
     }
 }

@@ -23,7 +23,8 @@ class Document2020Factory extends Factory
             'tanggal_surat_masuk' => $this->faker->date(),
             'tanggal_surat_diterima' => $this->faker->date(),
             'jenis_persetujuan' => $this->faker->randomElement(['Penjualan', 'Penghapusan', 'Sewa']),
-            'conceptor_id' => rand(1, 3),
+            'user_id_pkn' => rand(2,7),
+            'user_id_penilai' => rand(8, 11),
             'nomor_nd_permohonan_penilaian' => $this->faker->optional()->randomNumber(6),
             'tanggal_nd_permohonan_penilaian' => $this->faker->optional()->date(),
             'nomor_ndr_penilaian' => $this->faker->optional()->randomNumber(6),
@@ -33,7 +34,7 @@ class Document2020Factory extends Factory
             'nilai_proporsional_harga_perolehan_nilai_bmn' => $this->faker->optional()->randomNumber(8),
             'nilai_persetujuan' => $this->faker->optional()->randomFloat(2, 100, 1000),
             'periode_sewa' => $this->faker->optional()->numberBetween(1, 12),
-            'status_masa_aktif' => $this->faker->optional()->randomElement(['Aktif', 'Non-Aktif', 'Tenggang']),
+            'status_masa_aktif' => $this->faker->optional()->randomElement(['Aktif', 'Non-aktif', 'Tenggang']),
         ];
     }
 }
