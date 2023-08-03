@@ -1,59 +1,8 @@
 @extends('layouts.app')
 
 @push('js')
-    <script src="{{ asset('assets/js/libs/datatable-btns.js?ver=3.0.3') }}"></script>
     <script src="{{ asset('assets/js/example-toastr.js?ver=3.0.3') }}"></script>
 
-    <script>
-        $(document).ready(function() {
-            $(document).on('show.bs.modal', '#editConceptorModal', async function(event) {
-                const button = $(event.relatedTarget);
-                const id = button.data('id');
-                const modal = $(this);
-                const form = modal.find('#editForm');
-
-                $.ajax({
-                    url: '{{ route('conceptor.get', ':id') }}'.replace(':id', id),
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        form.find('#name').val(data.name);
-                        form.find('#email').val(data.email);
-                        form.find('#whatsapp_number').val(data.whatsapp_number);
-                        form.find('#role option').prop('selected', false);
-                    },
-                    error: function(xhr, status, error) {
-                        alert('Data tidak ditemukan');
-                    }
-                });
-
-                form.attr('action', '{{ route('conceptor.update', ':id') }}'.replace(':id', id));
-            });
-
-            $(document).on('show.bs.modal', '#deleteConceptorModal', async function(event) {
-                const button = $(event.relatedTarget);
-                const id = button.data('id');
-                const modal = $(this);
-                const form = modal.find('#deleteForm');
-
-                $.ajax({
-                    url: '{{ route('conceptor.get', ':id') }}'.replace(':id', id),
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        form.find('#deleteMessage').html(
-                            `Apakah anda yakin ingin menghapus <strong>${data.name}</strong> sebagai <strong>${data.role}</strong>?`
-                        );
-                    },
-                    error: function(xhr, status, error) {
-                        alert('Data tidak ditemukan');
-                    }
-                });
-
-                form.attr('action', '{{ route('conceptor.delete', ':id') }}'.replace(':id', id));
-            });
-        });
-    </script>
     @if (session()->has('success'))
         <script>
             let message = @json(session('success'));
@@ -76,11 +25,9 @@
             </div>
             <div class="card card-bordered card-preview">
                 <div class="card-inner">
-                    <table class="datatable-init-export table-responsive table-bordered nowrap table"
-                        data-export-title="Export">
+                    <table class="datatable-init table-responsive table-bordered nowrap table" data-export-title="Export">
                         <thead>
                             <tr class="table-light">
-                                <th class="text-center">No</th>
                                 <th class="text-center">Device ID</th>
                                 <th class="text-center">Nomor Whatsapp</th>
                                 <th class="text-center">Status</th>
@@ -89,10 +36,12 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="text-center"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td class="text-center">{{ $device_id }}</td>
+                                <td class="text-center">{{ $detail->data ? $detail->data->nomor : '-' }}</td>
+                                <td class="text-center">
+                                    <span
+                                        class="badge badge-dim rounded-pill {{ $detail->data->status == 'CONNECTED' ? 'bg-success' : 'bg-danger' }}">{{ $detail->data->status }}</span>
+                                </td>
                                 <td class="text-center">
                                     <button class="btn btn-warning btn-xs rounded-pill" data-bs-toggle="modal"
                                         data-bs-target="#editConceptorModal" data-modal-title="Edit Konseptor"
@@ -119,27 +68,15 @@
                     </a>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST" class="form-validate is-alter" id="editForm">
+                    <form action="{{ route('device.update') }}" method="POST" class="form-validate is-alter"
+                        id="editForm">
                         @csrf
                         <div class="form-group">
-                            <label class="form-label" for="name">Nama</label>
+                            <label class="form-label" for="device_id">Device Id</label>
                             <div class="form-control-wrap">
-                                <input type="text" class="form-control" id="name" name="name"
-                                    placeholder="Contoh: Aldi Taher" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="email">Email</label>
-                            <div class="form-control-wrap">
-                                <input type="email" class="form-control" id="email" name="email"
-                                    placeholder="Contoh: myemail123@gmail.com" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="whatsapp_number">Nomor whatsapp</label>
-                            <div class="form-control-wrap">
-                                <input type="text" class="form-control" id="whatsapp_number" name="whatsapp_number"
-                                    placeholder="Contoh: 08139384183" required>
+                                <input type="text" class="form-control" id="device_id" name="device_id"
+                                    value="{{ $device_id }}" placeholder="Contoh: 421ff5c63e4491d94dw9l64849eed1e3"
+                                    required>
                             </div>
                         </div>
                         <div class="form-group text-end">
