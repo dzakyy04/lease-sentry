@@ -8,7 +8,7 @@
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}">
     <!-- Page Title  -->
-    <title>Lease Sentry | Reset Password</title>
+    <title>Payowasdal | Reset Password</title>
     <!-- StyleSheets  -->
     <link rel="stylesheet" href="{{ asset('assets/css/dashlite.css?ver=3.0.3') }}">
     <link id="skin-default" rel="stylesheet" href="{{ asset('assets/css/theme.css?ver=3.0.3') }} ">
@@ -46,7 +46,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="px-3 px-sm-5 pb-2">
-                                                    <p>Halo Pengguna Lease Sentry</p>
+                                                    <p>Halo Pengguna Payowasdal</p>
                                                     <p>Klik tombol dibawah untuk reset password anda.
                                                     </p>
                                                     <a href="{{ route('reset-password.view', $token) }}"
