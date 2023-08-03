@@ -11,6 +11,7 @@
                 event.preventDefault();
 
                 $("#editForm input[disabled]").removeAttr("disabled");
+                $("#editForm select[disabled]").removeAttr("disabled");
 
                 $("#editForm").submit();
             });
