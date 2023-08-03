@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\ConceptorController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\Document2020Controller;
 use App\Http\Controllers\Document2021Controller;
 use App\Http\Controllers\Document2022Controller;
@@ -132,4 +133,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/dokumen/2023/{id}/edit', [Document2023Controller::class, 'update'])->name('document2023.update');
     Route::delete('/dokumen/2023/{id}/hapus', [Document2023Controller::class, 'delete'])->name('document2023.delete');
     Route::post('/dokumen/2023/import', [Document2023Controller::class, 'import'])->name('document2023.import');
+
+    // Device
+    Route::get('/device', [DeviceController::class, 'index'])->name('device.index');
+    Route::post('/konseptor', [ConceptorController::class, 'store'])->name('conceptor.store');
+    Route::get('/konseptor/{id}', [ConceptorController::class, 'getConceptor'])->name('conceptor.get');
+    Route::post('/konseptor/{id}/edit', [ConceptorController::class, 'update'])->name('conceptor.update');
+    Route::delete('/konseptor/{id}/hapus', [ConceptorController::class, 'delete'])->name('conceptor.delete');
 });

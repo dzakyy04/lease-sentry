@@ -120,6 +120,14 @@
                             <span class="nk-menu-text">Hari Libur</span>
                         </a>
                     </li>
+                    @can('super-admin')
+                    <li class="nk-menu-item">
+                        <a href="{{ route('device.index') }}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-mobile"></em></span>
+                            <span class="nk-menu-text">Device ID</span>
+                        </a>
+                    </li>
+                    @endcan
                 </ul>
             </div>
         </div>
