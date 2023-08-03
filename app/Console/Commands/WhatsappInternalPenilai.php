@@ -56,6 +56,7 @@ class WhatsappInternalPenilai extends Command
         $documents = $document2020->concat($document2021)->concat($document2022)->concat($document2023);
 
         foreach ($documents as $document) {
+            $progress = json_decode($document->progress);
             $startDate = $document->tanggal_nd_permohonan_penilaian;
             $totalDays = Helper::dayDifference($startDate, $today);
             $conceptorNumber = $document->user_penilai->whatsapp_number;
@@ -72,6 +73,11 @@ class WhatsappInternalPenilai extends Command
                 $message = $this->messageTemplate($approval, $number, $deadline);
                 Helper::sendWhatsapp($conceptorNumber, $message);
             }
+
+            $progress->dinilai->day = $totalDays;
+            $document->update([
+                'progress' => json_encode($progress)
+            ]);
         }
     }
 
