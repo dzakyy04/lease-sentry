@@ -239,6 +239,7 @@
                                             @can('admin-penilai')
                                             disabled
                                         @endcan>
+                                            <option disabled>Pilih Konseptor Pkn</option>
                                             @foreach ($pkn_conceptors as $pkn)
                                                 <option value="{{ $pkn->id }}" @selected($pkn->id == $document->user_pkn->id)>
                                                     {{ $pkn->name }}</option>
@@ -260,6 +261,7 @@
                                             @can('admin-penilai')
                                             disabled
                                         @endcan>
+                                            <option disabled>Pilih Konseptor Penilai</option>
                                             @foreach ($penilai_conceptors as $penilai)
                                                 <option value="{{ $penilai->id }}" @selected($penilai->id == $document->user_penilai->id)>
                                                     {{ $penilai->name }}</option>

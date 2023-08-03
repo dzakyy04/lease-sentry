@@ -188,8 +188,8 @@
                                     <div class="form-control-wrap">
                                         <select id="user_id_penilai"
                                             class="form-select js-select2 @error('user_id_penilai') is-invalid @enderror"
-                                            name="user_id_penilai" aria-label="State" value="{{ old('user_id_penilai') }}"
-                                            required>
+                                            name="user_id_penilai" aria-label="State"
+                                            value="{{ old('user_id_penilai') }}" required>
                                             <option selected disabled>Pilih Konseptor Penilai</option>
                                             @foreach ($penilai_conceptors as $penilai)
                                                 <option value="{{ $penilai->id }}">{{ $penilai->name }}</option>
@@ -210,7 +210,7 @@
                                             class="form-control @error('nomor_nd_permohonan_penilaian') is-invalid @enderror"
                                             name="nomor_nd_permohonan_penilaian"
                                             placeholder="Contoh: ND-775/KNL.0402/2023"
-                                            value="{{ old('nomor_nd_permohonan_penilaian') }}">
+                                            value="{{ old('nomor_nd_permohonan_penilaian') }}" required>
                                         @error('nomor_nd_permohonan_penilaian')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -225,7 +225,7 @@
                                         <input type="date" id="tanggal_nd_permohonan_penilaian"
                                             class="form-control @error('tanggal_nd_permohonan_penilaian') is-invalid @enderror"
                                             name="tanggal_nd_permohonan_penilaian" placeholder=" "
-                                            value="{{ old('tanggal_nd_permohonan_penilaian') }}">
+                                            value="{{ old('tanggal_nd_permohonan_penilaian') }}" required>
                                         @error('tanggal_nd_permohonan_penilaian')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror

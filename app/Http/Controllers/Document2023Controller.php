@@ -124,21 +124,19 @@ class Document2023Controller extends Controller
             'jenis_persetujuan' => 'required',
             'user_id_pkn' => 'required',
             'user_id_penilai' => 'required',
-            'nomor_nd_permohonan_penilaian' => 'nullable',
-            'tanggal_nd_permohonan_penilaian' => 'nullable'
+            'nomor_nd_permohonan_penilaian' => 'required',
+            'tanggal_nd_permohonan_penilaian' => 'required'
         ]);
 
-        $totalDays = Helper::dayDifference($request->tanggal_surat_diterima, now()->toDateString());
-        if ($request->jenis_persetujuan == 'Sewa') {
-            $totalDays = min($totalDays, 2);
-        } else {
-            $totalDays = min($totalDays, 3);
-        }
-        if ($request->nomor_nd_permohonan_penilaian && $request->tanggal_nd_permohonan_penilaian) {
+        $totalDays = Helper::dayDifference($request->tanggal_surat_diterima, $request->tanggal_nd_permohonan_penilaian);
+
+        $isCompleted = $request->tanggal_surat_diterima && $request->nomor_nd_permohonan_penilaian && $request->tanggal_nd_permohonan_penilaian;
+
+        if ($isCompleted) {
             $data['progress'] = json_encode([
-                'masuk' => ['day' => $totalDays, 'isCompleted' => true, 'completion_date' => now()->toDateString()],
-                'dinilai' => ['day' => 0, 'isCompleted' => false, 'completion_date' => null],
-                'selesai' => ['day' => 0, 'isCompleted' => false, 'completion_date' => null],
+                'masuk' => ['day' => $totalDays, 'isCompleted' => true],
+                'dinilai' => ['day' => 0, 'isCompleted' => false],
+                'selesai' => ['day' => 0, 'isCompleted' => false],
             ]);
         }
 
@@ -186,40 +184,31 @@ class Document2023Controller extends Controller
 
         $document = Document2023::with(['user_pkn', 'user_penilai'])->findOrFail($id);
         $progress = json_decode($document->progress);
-        $today = now()->toDateString();
 
-        $completed1 = $request->nomor_nd_permohonan_penilaian && $request->tanggal_nd_permohonan_penilaian;
-        $completed2 = $request->nomor_ndr_penilaian && $request->tanggal_ndr_diterima_penilaian;
-        $completed3 = $request->nomor_surat_persetujuan_penolakan &&
+        $isCompleted1 = $request->tanggal_surat_diterima && $request->nomor_nd_permohonan_penilaian && $request->tanggal_nd_permohonan_penilaian;
+
+        $isCompleted2 = $request->nomor_ndr_penilaian && $request->tanggal_ndr_diterima_penilaian;
+
+        $isCompleted3 = $request->nomor_surat_persetujuan_penolakan &&
             $request->tanggal_surat_persetujuan_penolakan && $request->nilai_proporsional_harga_perolehan_nilai_bmn;
 
-        if ($completed1) {
-            if ($progress->masuk->completion_date == null) {
-                $progress->masuk->completion_date = $today;
-            }
+        if ($isCompleted1) {
             $progress->masuk->isCompleted = true;
+            $totalDays = Helper::dayDifference($request->tanggal_surat_diterima, $request->tanggal_nd_permohonan_penilaian);
+            $progress->masuk->day = $totalDays;
         } else {
-            $progress->masuk->completion_date = null;
             $progress->masuk->isCompleted = false;
         }
 
-        if ($completed2) {
-            if ($progress->dinilai->completion_date == null) {
-                $progress->dinilai->completion_date = $today;
-            }
+        if ($isCompleted2) {
             $progress->dinilai->isCompleted = true;
         } else {
-            $progress->dinilai->completion_date = null;
             $progress->dinilai->isCompleted = false;
         }
 
-        if ($completed3) {
-            if ($progress->selesai->completion_date == null) {
-                $progress->selesai->completion_date = $today;
-            }
+        if ($isCompleted3) {
             $progress->selesai->isCompleted = true;
         } else {
-            $progress->selesai->completion_date = null;
             $progress->selesai->isCompleted = false;
         }
 

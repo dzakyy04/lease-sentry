@@ -13,8 +13,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('whatsapp:submit-progress');
-        $schedule->command('whatsapp:assessment-progress');
+        $schedule->command('whatsapp:external-all');
+        $schedule->command('whatsapp:external-lease');
+        $schedule->command('whatsapp:internal-penilai');
+        $schedule->command('whatsapp:internal-pkn');
     }
 
     /**
