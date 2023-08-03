@@ -110,10 +110,10 @@
                             @foreach ($documents as $index => $document)
                                 <tr class="text-center align-middle">
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $document->satker }}</td>
-                                    <td>{{ $document->nomor_surat_masuk }}</td>
-                                    <td>{{ $document->formatted_tanggal_surat_masuk }}</td>
-                                    <td>{{ $document->formatted_tanggal_surat_diterima }}</td>
+                                    <td>{{ $document->satker ? $document->satker : '-' }}</td>
+                                    <td>{{ $document->nomor_surat_masuk ? $document->nomor_surat_masuk : '-' }}</td>
+                                    <td>{{ $document->formatted_tanggal_surat_masuk ? $document->formatted_tanggal_surat_masuk : '-' }}</td>
+                                    <td>{{ $document->formatted_tanggal_surat_diterima ? $document->formatted_tanggal_surat_diterima : '-' }}</td>
                                     <td>{{ $document->jenis_persetujuan }}</td>
                                     <td class="text-center">
                                         <span
@@ -122,12 +122,12 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <span>{{ $document->user_pkn->name }}</span>
+                                        <span>{{ $document->user_pkn ? $document->user_pkn->name : '-' }}</span>
                                     </td>
                                     <td>
-                                        <span>{{ $document->user_penilai->name }}</span>
+                                        <span>{{ $document->user_penilai ? $document->user_penilai->name : '-' }}</span>
                                     </td>
-                                    <td>{{ $document->nomor_whatsapp_satker }}</td>
+                                    <td>{{ $document->nomor_whatsapp_satker ? $document->nomor_whatsapp_satker : '-'}}</td>
                                     <td>{{ $document->nomor_nd_permohonan_penilaian ? $document->nomor_nd_permohonan_penilaian : '-' }}
                                     </td>
                                     <td>

@@ -108,10 +108,10 @@
                             @foreach ($documents as $index => $document)
                                 <tr class="text-center align-middle">
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $document->satker }}</td>
-                                    <td>{{ $document->nomor_surat_masuk }}</td>
-                                    <td>{{ $document->formatted_tanggal_surat_masuk }}</td>
-                                    <td>{{ $document->formatted_tanggal_surat_diterima }}</td>
+                                    <td>{{ $document->satker ? $document->satker : '-' }}</td>
+                                    <td>{{ $document->nomor_surat_masuk ? $document->nomor_surat_masuk : '-' }}</td>
+                                    <td>{{ $document->formatted_tanggal_surat_masuk ? $document->formatted_tanggal_surat_masuk : '-' }}</td>
+                                    <td>{{ $document->formatted_tanggal_surat_diterima ? $document->formatted_tanggal_surat_diterima : '-' }}</td>
                                     <td>{{ $document->jenis_persetujuan }}</td>
                                     <td class="text-center">
                                         <span

@@ -35,17 +35,33 @@ class Document2022Import implements ToModel, WithHeadingRow, WithMapping
      */
     public function model(array $row)
     {
+
+        $satker = $row['satker'] ?? '-';
+        $nomor_surat_masuk = $row['nomor_surat_masuk'] ?? '-';
+        $nomor_whatsapp_satker = $row['nomor_whatsapp_satker'] ?? '-';
+        $nomor_nd_permohonan_penilaian = $row['nomor_nd_permohonan_penilaian'] ?? '-';
+        $user_id_pkn = $row['user_id_pkn'] ?? 2;
+
+        $tanggal_nd_permohonan_penilaian = $row['tanggal_nd_permohonan_penilaian'] ?? null;
+        if (empty($tanggal_nd_permohonan_penilaian)) {
+            $tanggal_surat_diterima = $row['tanggal_surat_diterima'] ?? null;
+            if (!empty($tanggal_surat_diterima)) {
+                $carbonDate = Carbon::parse($tanggal_surat_diterima);
+                $tanggal_nd_permohonan_penilaian = $carbonDate->addDays(2)->format('Y-m-d');
+            }
+        }
+
         return new Document2022([
-            'satker' => $row['satker'],
-            'nomor_whatsapp_satker' => $row['nomor_whatsapp_satker'],
-            'nomor_surat_masuk' => $row['nomor_surat_masuk'],
+            'satker' => $satker,
+            'nomor_whatsapp_satker' => $nomor_whatsapp_satker,
+            'nomor_surat_masuk' => $nomor_surat_masuk,
             'tanggal_surat_masuk' => $row['tanggal_surat_masuk'],
             'tanggal_surat_diterima' => $row['tanggal_surat_diterima'],
             'jenis_persetujuan' => $row['jenis_persetujuan'],
-            'user_id_pkn' => $row['user_id_pkn'],
+            'user_id_pkn' => $user_id_pkn,
             'user_id_penilai' => $row['user_id_penilai'],
-            'nomor_nd_permohonan_penilaian' => $row['nomor_nd_permohonan_penilaian'],
-            'tanggal_nd_permohonan_penilaian' => $row['tanggal_nd_permohonan_penilaian'],
+            'nomor_nd_permohonan_penilaian' => $nomor_nd_permohonan_penilaian,
+            'tanggal_nd_permohonan_penilaian' => $tanggal_nd_permohonan_penilaian,
             'nomor_ndr_penilaian' => $row['nomor_ndr_penilaian'],
             'tanggal_ndr_diterima_penilaian' => $row['tanggal_ndr_diterima_penilaian'],
             'nomor_surat_persetujuan_penolakan' => $row['nomor_surat_persetujuan_penolakan'],

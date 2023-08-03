@@ -122,12 +122,12 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <span>{{ $document->user_pkn->name }}</span>
+                                        <span>{{ $document->user_pkn ? $document->user_pkn->name : '-' }}</span>
                                     </td>
                                     <td>
-                                        <span>{{ $document->user_penilai->name }}</span>
+                                        <span>{{ $document->user_penilai ? $document->user_penilai->name : '-' }}</span>
                                     </td>
-                                    <td>{{ $document->nomor_whatsapp_satker }}</td>
+                                    <td>{{ $document->nomor_whatsapp_satker ? $document->nomor_whatsapp_satker : '-'}}</td>
                                     <td>{{ $document->nomor_nd_permohonan_penilaian ? $document->nomor_nd_permohonan_penilaian : '-' }}
                                     </td>
                                     <td>
