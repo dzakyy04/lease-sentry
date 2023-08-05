@@ -46,7 +46,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="px-3 px-sm-5 pb-2">
-                                                    <p>Halo Pengguna Lease Sentry</p>
+                                                    <p>Halo Pengguna Payowasdal</p>
                                                     <p>Klik tombol dibawah untuk reset password anda.
                                                     </p>
                                                     <a href="{{ route('reset-password.view', $token) }}"
