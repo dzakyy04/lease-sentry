@@ -136,8 +136,5 @@ Route::middleware('auth')->group(function () {
 
     // Device
     Route::get('/device', [DeviceController::class, 'index'])->name('device.index');
-    Route::post('/konseptor', [ConceptorController::class, 'store'])->name('conceptor.store');
-    Route::get('/konseptor/{id}', [ConceptorController::class, 'getConceptor'])->name('conceptor.get');
-    Route::post('/konseptor/{id}/edit', [ConceptorController::class, 'update'])->name('conceptor.update');
-    Route::delete('/konseptor/{id}/hapus', [ConceptorController::class, 'delete'])->name('conceptor.delete');
+    Route::post('/device/edit', [DeviceController::class, 'update'])->name('device.update');
 });
