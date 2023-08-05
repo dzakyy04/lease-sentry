@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Agung Fitriandi Nugroho',
-            'email' => 'adminpkn1@gmail.com',
+            'email' => 'agungfitriandi@gmail.com',
             'whatsapp_number' => '085740319698',
             'role' => 'Admin Pkn',
             'password' => Hash::make('password123'),
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Abdul Rohman Lubis',
-            'email' => 'adminpkn2@gmail.com',
+            'email' => 'hafanin.official@gmail.com',
             'whatsapp_number' => '082246440726',
             'role' => 'Admin Pkn',
             'password' => Hash::make('password123'),
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Ruyanto',
-            'email' => 'adminpkn3@gmail.com',
+            'email' => 'yantokpknl68@gmail.com',
             'whatsapp_number' => '081368333686',
             'role' => 'Admin Pkn',
             'password' => Hash::make('password123'),
@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Akhmad Taupikur Rahman',
-            'email' => 'adminpkn4@gmail.com',
+            'email' => 'elrahmanfikri@gmail.com',
             'whatsapp_number' => '085287936525',
             'role' => 'Admin Pkn',
             'password' => Hash::make('password123'),
@@ -55,7 +55,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Nancy Grace Pasaribu',
-            'email' => 'adminpkn5@gmail.com',
+            'email' => 'ncy039@gmail.com',
             'whatsapp_number' => '081273035356',
             'role' => 'Admin Pkn',
             'password' => Hash::make('password123'),
@@ -63,7 +63,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Wiyana',
-            'email' => 'adminpkn6@gmail.com',
+            'email' => 'wiyana11@gmail.com',
             'whatsapp_number' => '082136396070',
             'role' => 'Admin Pkn',
             'password' => Hash::make('password123'),
@@ -71,7 +71,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Albet Aruan',
-            'email' => 'adminpenilai1@gmail.com',
+            'email' => 'albet.aruan@gmail.com',
             'whatsapp_number' => '085279716286',
             'role' => 'Admin Penilai',
             'password' => Hash::make('password123'),
@@ -79,7 +79,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Syamsul Bahri',
-            'email' => 'adminpenilai2@gmail.com',
+            'email' => 'syamsulpn@gmail.com',
             'whatsapp_number' => '081337106430',
             'role' => 'Admin Penilai',
             'password' => Hash::make('password123'),
@@ -87,7 +87,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Muhamad Christian',
-            'email' => 'adminpenilai3@gmail.com',
+            'email' => 'muhamadchristian85@gmail.com',
             'whatsapp_number' => '08117209690',
             'role' => 'Admin Penilai',
             'password' => Hash::make('password123'),
@@ -95,7 +95,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Romas Fahdiar',
-            'email' => 'adminpenilai4@gmail.com',
+            'email' => 'hitzi29@gmail.com',
             'whatsapp_number' => '081229111988',
             'role' => 'Admin Penilai',
             'password' => Hash::make('password123'),

@@ -22,10 +22,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             HolidaySeeder::class,
-            Document2020Seeder::class,
-            Document2021Seeder::class,
-            Document2022Seeder::class,
-            Document2023Seeder::class,
+            // Document2020Seeder::class,
+            // Document2021Seeder::class,
+            // Document2022Seeder::class,
+            // Document2023Seeder::class,
         ]);
     }
 }
