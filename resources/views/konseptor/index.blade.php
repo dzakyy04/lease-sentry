@@ -6,25 +6,20 @@
 
     <script>
         $(document).ready(function() {
-            $(document).on('show.bs.modal', '#editConceptorModal', async function(event) {
+            $(document).on('show.bs.modal', '#editConceptorModal', function(event) {
                 const button = $(event.relatedTarget);
                 const id = button.data('id');
                 const modal = $(this);
                 const form = modal.find('#editForm');
+                const roleSelect = form.find('#edit_role');
 
-                $.ajax({
-                    url: '{{ route('conceptor.get', ':id') }}'.replace(':id', id),
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        form.find('#name').val(data.name);
-                        form.find('#email').val(data.email);
-                        form.find('#whatsapp_number').val(data.whatsapp_number);
-                        form.find('#role option').prop('selected', false);
-                    },
-                    error: function(xhr, status, error) {
-                        alert('Data tidak ditemukan');
-                    }
+                $.getJSON('{{ route('conceptor.get', ':id') }}'.replace(':id', id), function(data) {
+                    form.find('#name').val(data.name);
+                    form.find('#email').val(data.email);
+                    form.find('#whatsapp_number').val(data.whatsapp_number);
+                    roleSelect.find('option').prop('selected', false);
+                    roleSelect.find('option[value="' + data.role + '"]').prop('selected', true);
+                    roleSelect.select2();
                 });
 
                 form.attr('action', '{{ route('conceptor.update', ':id') }}'.replace(':id', id));
@@ -43,10 +38,10 @@
                     success: function(data) {
                         form.find('#deleteMessage').html(
                             `Apakah anda yakin ingin menghapus <strong>${data.name}</strong> sebagai <strong>${data.role}</strong>?`
-                            );
+                        );
                     },
                     error: function(xhr, status, error) {
-                        alert('Data tidak ditemukan');
+                        alert('Data tiak ditemukan');
                     }
                 });
 
@@ -169,8 +164,8 @@
                                     <select id="add_role" class="form-select js-select2 @error('role') is-invalid @enderror"
                                         name="role" aria-label="State" required>
                                         <option selected disabled>Pilih Peran Konseptor</option>
-                                        <option value="Admin Pkn">Admin Penilai</option>
-                                        <option value="Admin Penilai">Admin Pkn</option>
+                                        <option value="Admin Penilai">Admin Penilai</option>
+                                        <option value="Admin Pkn">Admin Pkn</option>
                                     </select>
                                 </div>
                             </div>
@@ -218,6 +213,19 @@
                                     placeholder="Contoh: 08139384183" required>
                             </div>
                         </div>
+                        @can('super-admin')
+                            <div class="form-group">
+                                <div class="form-label" for="edit_role">Peran</div>
+                                <div class="form-control-wrap">
+                                    <select id="edit_role" class="form-select js-select2 @error('role') is-invalid @enderror"
+                                        name="role" aria-label="State" required>
+                                        <option selected disabled>Pilih Peran Konseptor</option>
+                                        <option value="Admin Penilai">Admin Penilai</option>
+                                        <option value="Admin Pkn">Admin Pkn</option>
+                                    </select>
+                                </div>
+                            </div>
+                        @endcan
                         <div class="form-group text-end">
                             <button type="submit" class="btn btn-lg btn-primary">Simpan</button>
                         </div>
