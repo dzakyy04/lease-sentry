@@ -41,6 +41,7 @@ class Document2022Import implements ToModel, WithHeadingRow, WithMapping
         $nomor_whatsapp_satker = $row['nomor_whatsapp_satker'] ?? '-';
         $nomor_nd_permohonan_penilaian = $row['nomor_nd_permohonan_penilaian'] ?? '-';
         $user_id_pkn = $row['user_id_pkn'] ?? 2;
+        $user_id_penilai = $row['user_id_penilai'] ?? 10;
 
         $tanggal_nd_permohonan_penilaian = $row['tanggal_nd_permohonan_penilaian'] ?? null;
         if (empty($tanggal_nd_permohonan_penilaian)) {
@@ -59,7 +60,7 @@ class Document2022Import implements ToModel, WithHeadingRow, WithMapping
             'tanggal_surat_diterima' => $row['tanggal_surat_diterima'],
             'jenis_persetujuan' => $row['jenis_persetujuan'],
             'user_id_pkn' => $user_id_pkn,
-            'user_id_penilai' => $row['user_id_penilai'],
+            'user_id_penilai' => $user_id_penilai,
             'nomor_nd_permohonan_penilaian' => $nomor_nd_permohonan_penilaian,
             'tanggal_nd_permohonan_penilaian' => $tanggal_nd_permohonan_penilaian,
             'nomor_ndr_penilaian' => $row['nomor_ndr_penilaian'],
